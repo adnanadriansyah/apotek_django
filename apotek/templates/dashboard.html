@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sistem Apotek</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background: #f0f4f8; color: #333; }
+
+    .sidebar {
+      position: fixed; top: 0; left: 0; width: 230px; height: 100vh;
+      background: #0f1724; color: #fff; padding: 20px 0; z-index: 100;
+      border-right: 1px solid rgba(212,175,55,0.1);
+    }
+    .sidebar h2 {
+      text-align: center; font-size: 1.1rem; padding: 0 15px 20px;
+      border-bottom: 1px solid rgba(212,175,55,0.15);
+      color: #d4af37;
+    }
+    .sidebar nav a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 20px; color: #94a3b8; text-decoration: none;
+      font-size: 0.88rem; transition: all 0.2s;
+      border-left: 3px solid transparent;
+    }
+    .sidebar nav a:hover, .sidebar nav a.active {
+      background: rgba(212,175,55,0.08); color: #fff;
+      border-left-color: #d4af37;
+    }
+    .sidebar nav a svg.icon { width: 18px; height: 18px; flex-shrink: 0; }
+    .sidebar .user-info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 15px 20px; border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.8rem; color: #64748b;
+    }
+
+    .main { margin-left: 230px; padding: 25px; min-height: 100vh; }
+    .topbar {
+      background: rgba(255,255,255,0.9); backdrop-filter: blur(12px);
+      padding: 15px 25px; border-radius: 14px;
+      margin-bottom: 20px; display: flex; justify-content: space-between;
+      align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,.05);
+      border: 1px solid rgba(255,255,255,0.8);
+    }
+    .topbar h1 { font-size: 1.2rem; font-weight: 700; color: #0f1724; }
+
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 15px; margin-bottom: 25px; }
+    .card {
+      background: #fff; border-radius: 12px; padding: 20px;
+      text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,.06);
+      border-top: 3px solid #d4af37;
+    }
+    .card .num { font-size: 2rem; font-weight: 800; color: #0f1724; }
+    .card .label { font-size: 0.8rem; color: #94a3b8; margin-top: 4px; }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    .panel {
+      background: #fff; border-radius: 12px; padding: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.06); margin-bottom: 20px;
+      border: 1px solid rgba(0,0,0,.04);
+    }
+    .panel h3 { margin-bottom: 15px; color: #0f1724; font-weight: 700; font-size: 1rem; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th { background: #0f1724; color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+    td { padding: 9px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:hover td { background: #f8fafc; }
+
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 12px; margin-bottom: 15px; }
+    input, select { width: 100%; padding: 9px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.88rem; }
+    input:focus, select:focus { outline: none; border-color: #d4af37; box-shadow: 0 0 0 3px rgba(212,175,55,0.1); }
+    .btn { padding: 9px 18px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
+    .btn-primary { background: #0f1724; color: #fff; }
+    .btn-primary:hover { background: #1e293b; }
+    .btn-success { background: #059669; color: #fff; }
+    .btn-success:hover { background: #047857; }
+    .btn-danger  { background: #dc2626; color: #fff; }
+    .btn-danger:hover { background: #b91c1c; }
+    .btn-warning { background: #d4af37; color: #0f1724; }
+    .btn-warning:hover { background: #c9a432; }
+    .btn-gold { background: linear-gradient(135deg, #d4af37, #f5d76e); color: #0f1724; }
+    .btn-gold:hover { opacity: 0.9; }
+    label { font-size: 0.82rem; color: #64748b; margin-bottom: 3px; display: block; font-weight: 500; }
+
+    .chat-box {
+      height: 320px; overflow-y: auto; border: 1px solid #e2e8f0;
+      border-radius: 10px; padding: 12px; background: #f8fafc; margin-bottom: 12px;
+    }
+    .msg { margin-bottom: 10px; }
+    .msg .bubble {
+      display: inline-block; max-width: 70%; padding: 8px 13px;
+      border-radius: 12px; font-size: 0.88rem; line-height: 1.4;
+    }
+    .msg.user { text-align: right; }
+    .msg.user .bubble { background: #0f1724; color: #fff; border-bottom-right-radius: 3px; }
+    .msg.admin .bubble { background: #e2e8f0; color: #333; border-bottom-left-radius: 3px; }
+    .msg .meta { font-size: 0.72rem; color: #94a3b8; margin-top: 3px; }
+    .chat-input-row { display: flex; gap: 8px; }
+    .chat-input-row input { flex: 1; }
+
+    .badge { padding: 2px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600; }
+    .badge-ok  { background: #d1fae5; color: #065f46; }
+    .badge-low { background: #fee2e2; color: #991b1b; }
+
+    .toast {
+      position: fixed; bottom: 25px; right: 25px;
+      background: #059669; color: #fff; padding: 12px 20px;
+      border-radius: 10px; font-size: 0.9rem; z-index: 9999;
+      display: none; box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    }
+
+    .glass {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #d4af37, #f5d76e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hover-lift { transition: all 0.3s; }
+    .hover-lift:hover { transform: translateY(-4px); }
+    .profil-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(212,175,55,0.1);
+    }
+    .profil-icon svg { width: 22px; height: 22px; }
+  </style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div style="text-align:center; padding:0 15px 20px; border-bottom:1px solid rgba(212,175,55,0.15);">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:6px;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    <span style="font-size:1.05rem; font-weight:700; color:#d4af37; vertical-align:middle;">Apotek Sehat</span>
+  </div>
+  <nav>
+    <a href="#" class="active" onclick="showSection('dashboard', this)">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard</a>
+    <a href="#" onclick="showSection('barang', this)">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+      Data Barang</a>
+    <a href="#" onclick="showSection('stok', this)">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+      Stok Barang</a>
+    <a href="#" onclick="showSection('harga', this)">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      Daftar Harga</a>
+    <a href="#" onclick="showSection('pembelian', this)">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+      Pembelian</a>
+    <a href="#" onclick="showSection('laporan', this)">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Laporan Harian</a>
+    <a href="#" onclick="showSection('chat', this)">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      Pesanan</a>
+    <a href="#" onclick="showSection('profil', this)" style="border-top:1px solid rgba(212,175,55,0.15); margin-top:8px; padding-top:12px;">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Profil Perusahaan</a>
+  </nav>
+  <div class="user-info">
+    <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span style="color:#94a3b8;">{{ user.username }}</span>
+    </div>
+    <a href="/logout/" style="color:#d4af37; text-decoration:none; font-size:0.75rem;">Keluar →</a>
+  </div>
+  <a href="/" style="position:absolute; top:10px; right:12px; color:#64748b; text-decoration:none;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  </a>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <h1 id="page-title">Dashboard</h1>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span id="tgl-now" style="color:#94a3b8; font-size:.82rem;"></span>
+    </div>
+  </div>
+
+  <!-- ── DASHBOARD ── -->
+  <div id="sec-dashboard" class="section active">
+    <div class="cards">
+      <div class="card"><div class="num" id="cnt-barang">-</div><div class="label">Total Barang</div></div>
+      <div class="card"><div class="num" id="cnt-stok">-</div><div class="label">Total Stok</div></div>
+      <div class="card"><div class="num" id="cnt-beli">-</div><div class="label">Transaksi Hari Ini</div></div>
+      <div class="card"><div class="num" id="cnt-pendapatan">-</div><div class="label">Pendapatan Hari Ini</div></div>
+    </div>
+    <div class="panel">
+      <h3>Transaksi Pembelian Terbaru</h3>
+      <table id="tbl-recent"><thead><tr><th>No</th><th>Barang</th><th>Jumlah</th><th>Total</th><th>Waktu</th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <!-- ── BARANG ── -->
+  <div id="sec-barang" class="section">
+    <div class="panel">
+      <h3>Tambah Barang Baru</h3>
+      <div class="form-grid">
+        <div><label>Nama Barang</label><input id="b-nama" placeholder="cth: Paracetamol 500mg"/></div>
+        <div><label>Pemasok</label><input id="b-pemasok" placeholder="cth: PT Kimia Farma"/></div>
+        <div><label>Jumlah</label><input id="b-jumlah" type="number" placeholder="100"/></div>
+        <div><label>Tgl Expired</label><input id="b-expired" type="date"/></div>
+        <div><label>Harga Satuan (Rp)</label><input id="b-harga" type="number" placeholder="5000"/></div>
+      </div>
+      <button class="btn btn-primary" onclick="tambahBarang()">+ Tambah Barang</button>
+    </div>
+    <div class="panel">
+      <h3>Daftar Barang</h3>
+      <table id="tbl-barang">
+        <thead><tr><th>ID</th><th>Nama Barang</th><th>Pemasok</th><th>Jumlah</th><th>Tgl Expired</th><th>Aksi</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── STOK ── -->
+  <div id="sec-stok" class="section">
+    <div class="panel">
+      <h3>Stok Barang</h3>
+      <table id="tbl-stok">
+        <thead><tr><th>ID Stok</th><th>ID Barang</th><th>Nama Barang</th><th>Jumlah Stok</th><th>Status</th><th>Aksi</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── HARGA ── -->
+  <div id="sec-harga" class="section">
+    <div class="panel">
+      <h3>Daftar Harga</h3>
+      <table id="tbl-harga">
+        <thead><tr><th>ID Harga</th><th>ID Barang</th><th>Nama Barang</th><th>Harga Satuan</th><th>Aksi</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── PEMBELIAN ── -->
+  <div id="sec-pembelian" class="section">
+    <div class="panel">
+      <h3>Buat Transaksi Pembelian</h3>
+      <div class="form-grid">
+        <div><label>Pilih Barang</label>
+          <select id="p-barang"><option value="">-- Pilih Barang --</option></select>
+        </div>
+        <div><label>Jumlah Beli</label><input id="p-jumlah" type="number" min="1" placeholder="1"/></div>
+        <div><label>Harga Satuan (auto)</label><input id="p-harga" readonly style="background:#f8fafc"/></div>
+        <div><label>Total Bayar (auto)</label><input id="p-total" readonly style="background:#f8fafc"/></div>
+      </div>
+      <button class="btn btn-success" onclick="buatPembelian()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+        Proses Pembelian</button>
+    </div>
+    <div class="panel">
+      <h3>Riwayat Pembelian</h3>
+      <table id="tbl-pembelian">
+        <thead><tr><th>ID</th><th>Nama Barang</th><th>Jumlah</th><th>Harga</th><th>Total</th><th>Tgl Beli</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── LAPORAN ── -->
+  <div id="sec-laporan" class="section">
+    <div class="panel">
+      <h3>Sinkronisasi Laporan Harian</h3>
+      <div style="display:flex; gap:10px; align-items:flex-end;">
+        <div><label>Tanggal Laporan</label><input id="tgl-laporan" type="date"/></div>
+        <button class="btn btn-warning" onclick="sinkronLaporan()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+          Sinkronisasi Sekarang</button>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Rekap Laporan Harian</h3>
+      <table id="tbl-laporan">
+        <thead><tr><th>ID</th><th>Tanggal</th><th>Total Transaksi</th><th>Total Pendapatan</th><th>Digenerate</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── CHAT ── -->
+  <div id="sec-chat" class="section">
+    <div class="panel" style="max-width:700px;">
+      <h3>Chat Pemesanan Obat</h3>
+      <div class="chat-box" id="chat-box"></div>
+      <div style="margin-bottom:8px;">
+        <label>Nama Anda</label>
+        <input id="chat-nama" placeholder="Nama pasien / customer" style="max-width:280px;"/>
+      </div>
+      <div class="chat-input-row">
+        <input id="chat-pesan" placeholder="Tulis pesan / pesanan obat Anda..." onkeydown="if(event.key==='Enter') kirimChat()"/>
+        <button class="btn btn-primary" onclick="kirimChat()">Kirim</button>
+      </div>
+      <hr style="margin:15px 0; border-color:#e2e8f0;"/>
+      <h4 style="margin-bottom:10px; color:#0f1724; font-weight:700; font-size:0.9rem;">Panel Admin – Balas Pesan</h4>
+      <div class="chat-input-row">
+        <input id="admin-pesan" placeholder="Tulis balasan admin..." onkeydown="if(event.key==='Enter') replyAdmin()"/>
+        <button class="btn btn-warning" onclick="replyAdmin()">Balas (Admin)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROFIL PERUSAHAAN ── -->
+  <div id="sec-profil" class="section">
+    <div class="rounded-xl overflow-hidden mb-6" style="background: linear-gradient(135deg, #0f1724 0%, #1a2a4a 50%, #1e3a5f 100%);">
+      <div class="relative px-8 py-16 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase text-[#d4af37] border border-[#d4af37]/30 bg-[#d4af37]/5 mb-5">
+          Sejak 2010 · Terpercaya
+        </div>
+        <h2 class="text-4xl font-extrabold text-white mb-3">Kesehatan <span class="gradient-text">Mitra Terbaik</span></h2>
+        <p class="text-gray-400 max-w-xl mx-auto text-sm">Apotek terpercaya dengan layanan lengkap, obat original, dan tenaga farmasi profesional.</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10 max-w-3xl mx-auto">
+          <div class="glass rounded-xl p-4">
+            <div class="text-2xl font-extrabold" style="color:#d4af37;">12+</div>
+            <div class="text-xs text-gray-400 mt-1">Tahun</div>
+          </div>
+          <div class="glass rounded-xl p-4">
+            <div class="text-2xl font-extrabold" style="color:#d4af37;">50rb+</div>
+            <div class="text-xs text-gray-400 mt-1">Pelanggan</div>
+          </div>
+          <div class="glass rounded-xl p-4">
+            <div class="text-2xl font-extrabold" style="color:#d4af37;">5000+</div>
+            <div class="text-xs text-gray-400 mt-1">Produk</div>
+          </div>
+          <div class="glass rounded-xl p-4">
+            <div class="text-2xl font-extrabold" style="color:#d4af37;">98%</div>
+            <div class="text-xs text-gray-400 mt-1">Stok Tersedia</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-6 mb-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="profil-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900">Tentang Kami</h3>
+            <p class="text-xs text-gray-400">Lebih dari sekadar apotek biasa</p>
+          </div>
+        </div>
+        <p class="text-sm text-gray-600 leading-relaxed mb-4">
+          Apotek Sehat hadir sejak 2010 sebagai solusi kesehatan terpercaya di Indonesia. 
+          Kami berkomitmen menyediakan obat-obatan berkualitas dengan layanan farmasi 
+          profesional yang didukung oleh tenaga ahli berpengalaman.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700">Terdaftar BPOM</span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700">100% Original</span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700">Cepat & Aman</span>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="profil-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900">Kontak & Lokasi</h3>
+            <p class="text-xs text-gray-400">Hubungi kami kapan saja</p>
+          </div>
+        </div>
+        <div class="space-y-3 text-sm">
+          <div class="flex items-center gap-3 text-gray-600">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Jl. Kesehatan No. 123, Kelapa Gading, Jakarta Utara</span>
+          </div>
+          <div class="flex items-center gap-3 text-gray-600">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+            <span>(021) 1234-5678 / WA: 0812-3456-7890</span>
+          </div>
+          <div class="flex items-center gap-3 text-gray-600">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span>info@apoteksehat.co.id</span>
+          </div>
+          <div class="flex items-center gap-3 text-gray-600">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Sen-Sab 08:00-21:00, Min 09:00-17:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 mb-6">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="profil-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        </div>
+        <div>
+          <h3 class="font-bold text-gray-900">Layanan Kami</h3>
+          <p class="text-xs text-gray-400">Solusi kesehatan terlengkap</p>
+        </div>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="p-4 rounded-xl bg-gray-50 hover:bg-amber-50 transition-all hover-lift cursor-pointer">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          <h4 class="font-semibold text-sm text-gray-900">Obat Resep & Non-Resep</h4>
+          <p class="text-xs text-gray-500 mt-1">Koleksi lengkap dari merek terpercaya</p>
+        </div>
+        <div class="p-4 rounded-xl bg-gray-50 hover:bg-amber-50 transition-all hover-lift cursor-pointer">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <h4 class="font-semibold text-sm text-gray-900">Herbal & Suplemen</h4>
+          <p class="text-xs text-gray-500 mt-1">Produk herbal berkualitas tinggi</p>
+        </div>
+        <div class="p-4 rounded-xl bg-gray-50 hover:bg-amber-50 transition-all hover-lift cursor-pointer">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <h4 class="font-semibold text-sm text-gray-900">Konsultasi Farmasi</h4>
+          <p class="text-xs text-gray-500 mt-1">Gratis dengan apoteker berpengalaman</p>
+        </div>
+        <div class="p-4 rounded-xl bg-gray-50 hover:bg-amber-50 transition-all hover-lift cursor-pointer">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+          <h4 class="font-semibold text-sm text-gray-900">Antar Obat Gratis</h4>
+          <p class="text-xs text-gray-500 mt-1">Area sekitar dengan fast response</p>
+        </div>
+        <div class="p-4 rounded-xl bg-gray-50 hover:bg-amber-50 transition-all hover-lift cursor-pointer">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <h4 class="font-semibold text-sm text-gray-900">Cek Kesehatan</h4>
+          <p class="text-xs text-gray-500 mt-1">Tekanan darah, gula, kolesterol gratis</p>
+        </div>
+        <div class="p-4 rounded-xl bg-gray-50 hover:bg-amber-50 transition-all hover-lift cursor-pointer">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          <h4 class="font-semibold text-sm text-gray-900">Pembayaran Mudah</h4>
+          <p class="text-xs text-gray-500 mt-1">Tunai, debit, QRIS, BPJS</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 mb-6">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="profil-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div>
+          <h3 class="font-bold text-gray-900">Tim Profesional</h3>
+          <p class="text-xs text-gray-400">Tenaga ahli berpengalaman</p>
+        </div>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-4">
+        <div class="text-center p-4 rounded-xl bg-gray-50 hover-lift">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mb-3 mx-auto"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <h4 class="font-semibold text-sm">dr. Sarah Paramitha</h4>
+          <span class="text-xs text-[#d4af37] font-medium">Apoteker Kepala</span>
+          <p class="text-xs text-gray-500 mt-2">15 tahun pengalaman</p>
+        </div>
+        <div class="text-center p-4 rounded-xl bg-gray-50 hover-lift">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mb-3 mx-auto"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M17 14a5 5 0 00-10 0"/></svg>
+          <h4 class="font-semibold text-sm">apt. Andi Pratama</h4>
+          <span class="text-xs text-[#d4af37] font-medium">Apoteker</span>
+          <p class="text-xs text-gray-500 mt-2">Konseling & terapi pasien</p>
+        </div>
+        <div class="text-center p-4 rounded-xl bg-gray-50 hover-lift">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mb-3 mx-auto"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <h4 class="font-semibold text-sm">apt. Rina Wijaya</h4>
+          <span class="text-xs text-[#d4af37] font-medium">Apoteker</span>
+          <p class="text-xs text-gray-500 mt-2">Informasi & resep obat</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gradient-to-r from-gray-900 to-gray-800 rounded-xl p-8 text-center">
+      <h3 class="text-2xl font-extrabold text-white mb-3">Siap untuk <span class="gradient-text">Hidup Sehat</span>?</h3>
+      <p class="text-gray-400 text-sm mb-6">Kunjungi Apotek Sehat terdekat atau hubungi kami.</p>
+      <a href="https://wa.me/6281234567890" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-gray-900 bg-gradient-to-r from-[#d4af37] to-[#f5d76e] hover:opacity-90 transition-all shadow-lg">
+        Hubungi via WhatsApp →
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = '';
+
+function toast(msg, color='#059669') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.style.background = color; t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 3000);
+}
+
+function showSection(name, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById('sec-' + name).classList.add('active');
+  if (el) el.classList.add('active');
+  const titles = { dashboard:'Dashboard', barang:'Data Barang', stok:'Stok Barang',
+    harga:'Daftar Harga', pembelian:'Pembelian', laporan:'Laporan Harian', chat:'Chat Pemesanan',
+    profil:'Profil Perusahaan' };
+  document.getElementById('page-title').textContent = titles[name] || name;
+  if (name==='barang') loadBarang();
+  if (name==='stok') loadStok();
+  if (name==='harga') loadHarga();
+  if (name==='pembelian') { loadPembelian(); loadBarangSelect(); }
+  if (name==='laporan') loadLaporan();
+  if (name==='chat') loadChat();
+}
+
+const now = new Date();
+document.getElementById('tgl-now').textContent = now.toLocaleDateString('id-ID', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+document.getElementById('tgl-laporan').value = now.toISOString().split('T')[0];
+
+async function loadDashboard() {
+  const [br, st, bl] = await Promise.all([
+    fetch(API+'/api/barang/').then(r=>r.json()),
+    fetch(API+'/api/stok/').then(r=>r.json()),
+    fetch(API+'/api/pembelian/').then(r=>r.json()),
+  ]);
+  document.getElementById('cnt-barang').textContent = br.data.length;
+  const totalStok = st.data.reduce((a,b)=>a+b.jumlah_stok, 0);
+  document.getElementById('cnt-stok').textContent = totalStok;
+  const today = now.toISOString().split('T')[0];
+  const todayTx = bl.data.filter(b=>b.tgl_beli.startsWith(today));
+  document.getElementById('cnt-beli').textContent = todayTx.length;
+  const pendapatan = todayTx.reduce((a,b)=>a+b.total_pembayaran, 0);
+  document.getElementById('cnt-pendapatan').textContent = 'Rp '+pendapatan.toLocaleString('id-ID');
+  const tbody = document.querySelector('#tbl-recent tbody');
+  tbody.innerHTML = bl.data.slice(0,5).map((d,i)=>`
+    <tr><td>${i+1}</td><td>${d.nama_barang}</td><td>${d.jumlah_pembelian}</td>
+    <td>Rp ${Number(d.total_pembayaran).toLocaleString('id-ID')}</td><td>${d.tgl_beli.slice(0,16)}</td></tr>`).join('');
+}
+
+async function loadBarang() {
+  const res = await fetch(API+'/api/barang/').then(r=>r.json());
+  document.querySelector('#tbl-barang tbody').innerHTML = res.data.map(d=>`
+    <tr><td>${d.id}</td><td>${d.nama_barang}</td><td>${d.pemasok}</td><td>${d.jumlah_barang}</td>
+    <td>${d.tgl_expired}</td>
+    <td><button class="btn btn-danger" onclick="hapusBarang(${d.id})">Hapus</button></td></tr>`).join('');
+}
+
+async function tambahBarang() {
+  const body = {
+    nama_barang: document.getElementById('b-nama').value,
+    pemasok: document.getElementById('b-pemasok').value,
+    jumlah_barang: parseInt(document.getElementById('b-jumlah').value),
+    tgl_expired: document.getElementById('b-expired').value,
+    harga_satuan: parseFloat(document.getElementById('b-harga').value) || 0,
+  };
+  if (!body.nama_barang || !body.pemasok || !body.jumlah_barang || !body.tgl_expired)
+    return toast('Lengkapi semua field!', '#dc2626');
+  const res = await fetch(API+'/api/barang/', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) }).then(r=>r.json());
+  toast(res.message);
+  loadBarang();
+}
+
+async function hapusBarang(id) {
+  if (!confirm('Hapus barang ini?')) return;
+  await fetch(API+'/api/barang/'+id+'/', { method:'DELETE' });
+  toast('Barang dihapus', '#dc2626');
+  loadBarang();
+}
+
+async function loadStok() {
+  const res = await fetch(API+'/api/stok/').then(r=>r.json());
+  document.querySelector('#tbl-stok tbody').innerHTML = res.data.map(d=>`
+    <tr><td>${d.id}</td><td>${d.barang_id}</td><td>${d.nama_barang}</td><td>${d.jumlah_stok}</td>
+    <td><span class="badge ${d.jumlah_stok>10?'badge-ok':'badge-low'}">${d.jumlah_stok>10?'Cukup':'Rendah'}</span></td>
+    <td><input type="number" id="stok-${d.id}" value="${d.jumlah_stok}" style="width:80px;display:inline;margin-right:6px;"/>
+    <button class="btn btn-warning" onclick="updateStok(${d.id})">Update</button></td></tr>`).join('');
+}
+
+async function updateStok(id) {
+  const val = document.getElementById('stok-'+id).value;
+  const res = await fetch(API+'/api/stok/'+id+'/', { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify({jumlah_stok: parseInt(val)}) }).then(r=>r.json());
+  toast(res.message);
+  loadStok();
+}
+
+async function loadHarga() {
+  const res = await fetch(API+'/api/harga/').then(r=>r.json());
+  document.querySelector('#tbl-harga tbody').innerHTML = res.data.map(d=>`
+    <tr><td>${d.id}</td><td>${d.barang_id}</td><td>${d.nama_barang}</td>
+    <td>Rp ${Number(d.harga_satuan).toLocaleString('id-ID')}</td>
+    <td><input type="number" id="hrg-${d.id}" value="${d.harga_satuan}" style="width:100px;display:inline;margin-right:6px;"/>
+    <button class="btn btn-warning" onclick="updateHarga(${d.id})">Update</button></td></tr>`).join('');
+}
+
+async function updateHarga(id) {
+  const val = document.getElementById('hrg-'+id).value;
+  const res = await fetch(API+'/api/harga/'+id+'/', { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify({harga_satuan: parseFloat(val)}) }).then(r=>r.json());
+  toast(res.message);
+  loadHarga();
+}
+
+let hargaMap = {};
+async function loadBarangSelect() {
+  const [br, hr] = await Promise.all([
+    fetch(API+'/api/barang/').then(r=>r.json()),
+    fetch(API+'/api/harga/').then(r=>r.json()),
+  ]);
+  hargaMap = {};
+  hr.data.forEach(h => hargaMap[h.barang_id] = h.harga_satuan);
+  const sel = document.getElementById('p-barang');
+  sel.innerHTML = '<option value="">-- Pilih Barang --</option>' +
+    br.data.map(b=>`<option value="${b.id}">${b.nama_barang}</option>`).join('');
+  sel.onchange = () => {
+    const h = hargaMap[sel.value] || 0;
+    document.getElementById('p-harga').value = 'Rp ' + Number(h).toLocaleString('id-ID');
+    hitungTotal();
+  };
+  document.getElementById('p-jumlah').oninput = hitungTotal;
+}
+
+function hitungTotal() {
+  const id = document.getElementById('p-barang').value;
+  const jml = parseInt(document.getElementById('p-jumlah').value) || 0;
+  const h = hargaMap[id] || 0;
+  document.getElementById('p-total').value = 'Rp ' + (h * jml).toLocaleString('id-ID');
+}
+
+async function loadPembelian() {
+  const res = await fetch(API+'/api/pembelian/').then(r=>r.json());
+  document.querySelector('#tbl-pembelian tbody').innerHTML = res.data.map(d=>`
+    <tr><td>${d.id}</td><td>${d.nama_barang}</td><td>${d.jumlah_pembelian}</td>
+    <td>Rp ${Number(d.harga).toLocaleString('id-ID')}</td>
+    <td>Rp ${Number(d.total_pembayaran).toLocaleString('id-ID')}</td>
+    <td>${d.tgl_beli.slice(0,16)}</td></tr>`).join('');
+}
+
+async function buatPembelian() {
+  const id_barang = document.getElementById('p-barang').value;
+  const jumlah = parseInt(document.getElementById('p-jumlah').value);
+  if (!id_barang || !jumlah) return toast('Pilih barang dan isi jumlah!', '#dc2626');
+  const res = await fetch(API+'/api/pembelian/', { method:'POST', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({ id_barang: parseInt(id_barang), jumlah_pembelian: jumlah }) }).then(r=>r.json());
+  if (res.status === 'ok') { toast(res.message); loadPembelian(); }
+  else toast(res.message, '#dc2626');
+}
+
+async function loadLaporan() {
+  const res = await fetch(API+'/api/laporan/').then(r=>r.json());
+  document.querySelector('#tbl-laporan tbody').innerHTML = res.data.map(d=>`
+    <tr><td>${d.id}</td><td>${d.tgl_laporan}</td><td>${d.total_transaksi} transaksi</td>
+    <td>Rp ${Number(d.total_pendapatan).toLocaleString('id-ID')}</td>
+    <td>${d.generated_at.slice(0,16)}</td></tr>`).join('');
+}
+
+async function sinkronLaporan() {
+  const tgl = document.getElementById('tgl-laporan').value;
+  const res = await fetch(API+'/api/laporan/', { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ tgl_laporan: tgl }) }).then(r=>r.json());
+  toast(res.message);
+  loadLaporan();
+}
+
+async function loadChat() {
+  const res = await fetch(API+'/api/chat/').then(r=>r.json());
+  const box = document.getElementById('chat-box');
+  box.innerHTML = res.data.map(d=>`
+    <div class="msg ${d.role}">
+      <div class="bubble">${d.pesan}</div>
+      <div class="meta">${d.nama_pengirim} · ${d.tgl_chat.slice(0,16)}</div>
+    </div>`).join('');
+  box.scrollTop = box.scrollHeight;
+}
+
+async function kirimChat() {
+  const nama = document.getElementById('chat-nama').value.trim();
+  const pesan = document.getElementById('chat-pesan').value.trim();
+  if (!nama || !pesan) return toast('Isi nama dan pesan!', '#dc2626');
+  await fetch(API+'/api/chat/', { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ nama_pengirim: nama, pesan: pesan, role:'user' }) });
+  document.getElementById('chat-pesan').value = '';
+  loadChat();
+}
+
+async function replyAdmin() {
+  const pesan = document.getElementById('admin-pesan').value.trim();
+  if (!pesan) return toast('Tulis balasan admin!', '#dc2626');
+  await fetch(API+'/api/chat/admin/reply/', { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ nama_pengirim:'Admin Apotek', pesan: pesan }) });
+  document.getElementById('admin-pesan').value = '';
+  loadChat();
+}
+
+loadDashboard();
+</script>
+</body>
+</html>
