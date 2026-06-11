@@ -13,6 +13,11 @@ urlpatterns = [
 
     # Halaman Profil Perusahaan (landing page)
     path('', obat_views.company_profile, name='company-profile'),
+    path('tentang/', obat_views.tentang, name='tentang'),
+    path('layanan/', obat_views.layanan, name='layanan'),
+    path('tim/', obat_views.tim, name='tim'),
+    path('testimoni/', obat_views.testimoni, name='testimoni'),
+    path('kontak/', obat_views.kontak, name='kontak'),
 
     # Dashboard (dilindungi login)
     path('dashboard/', obat_views.dashboard, name='dashboard'),

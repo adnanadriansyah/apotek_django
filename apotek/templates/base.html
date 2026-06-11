@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Apotek Sehat{% endblock %} - Apotek Sehat</title>
+  <link href="{% static 'css/output.css' %}" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  {% block extra_head %}{% endblock %}
+  <style>
+    * { font-family: 'Plus Jakarta Sans', sans-serif; }
+    html { scroll-behavior: smooth; }
+    .glass {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .glass-dark {
+      background: rgba(0,0,0,0.2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gradient-accent {
+      background: linear-gradient(135deg, #d4af37 0%, #f5d76e 50%, #d4af37 100%);
+    }
+    .gradient-primary {
+      background: linear-gradient(135deg, #0f1724 0%, #1a2a4a 50%, #1e3a5f 100%);
+    }
+    .hover-lift {
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .hover-lift:hover {
+      transform: translateY(-8px) scale(1.01);
+    }
+    .nav-link {
+      position: relative;
+      transition: color 0.3s;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #d4af37, #f5d76e);
+      transition: width 0.3s;
+    }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active::after { width: 100%; }
+    .service-icon-wrap {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      background: linear-gradient(135deg, #1a2a4a, #2a4a7a);
+      color: #d4af37;
+    }
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent);
+    }
+    .stat-number {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #d4af37, #f9e07f);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+    }
+    .animate-float { animation: float 5s ease-in-out infinite; }
+    .animate-fade-in-up { animation: fadeInUp 0.7s ease-out forwards; }
+    .animate-glow { animation: pulse-glow 4s ease-in-out infinite; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .shimmer {
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 3s infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .testimonial-card {
+      border-left: 3px solid #d4af37;
+    }
+  </style>
+</head>
+<body class="bg-[#0a0f1a] text-white antialiased">
+
+  {% block navbar %}
+  <nav class="fixed top-0 left-0 w-full z-50 glass-dark">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <span class="text-lg font-bold tracking-tight">Apotek <span class="text-[#d4af37]">Sehat</span></span>
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+        <a href="/" class="nav-link {% if active_page == 'beranda' %}active{% endif %}">Beranda</a>
+        <a href="/tentang/" class="nav-link {% if active_page == 'tentang' %}active{% endif %}">Tentang</a>
+        <a href="/layanan/" class="nav-link {% if active_page == 'layanan' %}active{% endif %}">Layanan</a>
+        <a href="/tim/" class="nav-link {% if active_page == 'tim' %}active{% endif %}">Tim</a>
+        <a href="/testimoni/" class="nav-link {% if active_page == 'testimoni' %}active{% endif %}">Testimoni</a>
+        <a href="/kontak/" class="nav-link {% if active_page == 'kontak' %}active{% endif %}">Kontak</a>
+      </div>
+      <div class="hidden sm:flex items-center gap-3">
+        <a href="/login/" class="px-5 py-2.5 rounded-full text-sm font-semibold text-gray-300 border border-white/10 hover:bg-white/5 transition-all">
+          Masuk
+        </a>
+        <a href="/login/" class="px-5 py-2.5 rounded-full text-sm font-semibold text-[#0a0f1a] gradient-accent hover:opacity-90 transition-all shadow-lg shadow-[#d4af37]/20">
+          Dashboard &rarr;
+        </a>
+      </div>
+    </div>
+  </nav>
+  {% endblock %}
+
+  {% block content %}{% endblock %}
+
+  {% block footer %}
+  <footer class="border-t border-white/5 py-10 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-2">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <span class="text-sm font-bold">Apotek <span class="text-[#d4af37]">Sehat</span></span>
+        </div>
+        <p class="text-xs text-gray-600">&copy; 2024 Apotek Sehat. All rights reserved.</p>
+        <div class="flex items-center gap-4">
+          <span class="text-xs text-gray-600">Follow kami</span>
+          <a href="#" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-[#d4af37]/20 hover:text-[#d4af37] transition-all text-xs">FB</a>
+          <a href="#" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-[#d4af37]/20 hover:text-[#d4af37] transition-all text-xs">IG</a>
+          <a href="#" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-[#d4af37]/20 hover:text-[#d4af37] transition-all text-xs">TW</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  {% endblock %}
+
+</body>
+</html>

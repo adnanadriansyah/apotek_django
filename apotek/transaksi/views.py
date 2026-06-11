@@ -1,8 +1,9 @@
 import json
-from datetime import date
+from datetime import date, datetime, timedelta
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Sum, Count
+from django.utils import timezone
 from obat.models import Barang, StokBarang, DaftarHarga
 from .models import Pembelian, LaporanHarian
 
@@ -93,12 +94,17 @@ def sinkronisasi_laporan(request):
         body = json.loads(request.body) if request.body else {}
         tgl = body.get('tgl_laporan', str(date.today()))
 
-        qs = Pembelian.objects.filter(tgl_beli__date=tgl)
-        total_transaksi = qs.count()
-        total_pendapatan = qs.aggregate(total=Sum('total_pembayaran'))['total'] or 0
+        tgl_date = datetime.strptime(tgl, '%Y-%m-%d').date()
+        tgl_start = timezone.make_aware(datetime.combine(tgl_date, datetime.min.time()))
+        tgl_end = timezone.make_aware(datetime.combine(tgl_date + timedelta(days=1), datetime.min.time()))
+
+        total_transaksi = Pembelian.objects.filter(tgl_beli__gte=tgl_start, tgl_beli__lt=tgl_end).count()
+        total_pendapatan = Pembelian.objects.filter(tgl_beli__gte=tgl_start, tgl_beli__lt=tgl_end).aggregate(
+            total=Sum('total_pembayaran')
+        )['total'] or 0
 
         laporan, created = LaporanHarian.objects.update_or_create(
-            tgl_laporan=tgl,
+            tgl_laporan=tgl_date,
             defaults={
                 'total_transaksi': total_transaksi,
                 'total_pendapatan': total_pendapatan,
@@ -107,7 +113,7 @@ def sinkronisasi_laporan(request):
 
         return JsonResponse({
             'status': 'ok',
-            'message': f'Laporan {"dibuat" if created else "diperbarui"} untuk tanggal {tgl}',
+            'message': f'Laporan {"dibuat" if created else "diperbarui"} — {total_transaksi} transaksi, Rp {float(total_pendapatan):,.0f}',
             'data': {
                 'tgl_laporan': str(laporan.tgl_laporan),
                 'total_transaksi': laporan.total_transaksi,

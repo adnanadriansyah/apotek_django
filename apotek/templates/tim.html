@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tim{% endblock %}
+
+{% block content %}
+<section class="min-h-screen py-28 px-6 pt-32 flex items-center">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="text-xs font-semibold tracking-[0.2em] uppercase text-[#d4af37]">Tim Kami</span>
+      <h2 class="text-4xl md:text-5xl font-extrabold mt-4 mb-6">
+        Tenaga <span class="gradient-text">Profesional</span>
+      </h2>
+      <p class="text-gray-500 leading-relaxed">
+        Didukung oleh tenaga farmasi yang kompeten dan berpengalaman di bidangnya.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="glass rounded-2xl p-8 text-center hover-lift">
+        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-[#d4af37] to-[#f5d76e] flex items-center justify-center mb-5 shadow-lg shadow-[#d4af37]/20">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0a0f1a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h3 class="text-lg font-bold">dr. Sarah Paramitha</h3>
+        <span class="text-xs text-[#d4af37] font-semibold tracking-wide">Apoteker Kepala</span>
+        <p class="text-sm text-gray-500 mt-3 leading-relaxed">Berpengalaman 15 tahun di bidang farmasi klinis dan manajemen apotek.</p>
+      </div>
+      <div class="glass rounded-2xl p-8 text-center hover-lift">
+        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-[#d4af37] to-[#f5d76e] flex items-center justify-center mb-5 shadow-lg shadow-[#d4af37]/20">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0a0f1a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M17 14a5 5 0 00-10 0"/></svg>
+        </div>
+        <h3 class="text-lg font-bold">apt. Andi Pratama</h3>
+        <span class="text-xs text-[#d4af37] font-semibold tracking-wide">Apoteker</span>
+        <p class="text-sm text-gray-500 mt-3 leading-relaxed">Spesialis konseling obat dan manajemen terapi pasien.</p>
+      </div>
+      <div class="glass rounded-2xl p-8 text-center hover-lift">
+        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-[#d4af37] to-[#f5d76e] flex items-center justify-center mb-5 shadow-lg shadow-[#d4af37]/20">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0a0f1a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h3 class="text-lg font-bold">apt. Rina Wijaya</h3>
+        <span class="text-xs text-[#d4af37] font-semibold tracking-wide">Apoteker</span>
+        <p class="text-sm text-gray-500 mt-3 leading-relaxed">Ahli dalam penanganan resep dan pelayanan informasi obat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tentang{% endblock %}
+
+{% block content %}
+<section class="min-h-screen py-28 px-6 pt-32 flex items-center">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+      <div class="animate-fade-in-up">
+        <span class="text-xs font-semibold tracking-[0.2em] uppercase text-[#d4af37]">Tentang Kami</span>
+        <h2 class="text-4xl md:text-5xl font-extrabold mt-4 mb-6 leading-tight">
+          Lebih dari Sekadar<br/>
+          <span class="gradient-text">Apotek Biasa</span>
+        </h2>
+        <div class="section-divider mb-6"></div>
+        <p class="text-gray-400 leading-relaxed mb-6">
+          Apotek Sehat hadir sejak 2010 sebagai solusi kesehatan terpercaya di Indonesia. 
+          Kami berkomitmen menyediakan obat-obatan berkualitas dengan layanan farmasi 
+          profesional yang didukung oleh tenaga ahli berpengalaman.
+        </p>
+        <p class="text-gray-500 leading-relaxed mb-8">
+          Dengan sistem manajemen modern dan kemitraan langsung dengan distributor resmi, 
+          kami menjamin keaslian produk, harga terjangkau, dan pelayanan cepat untuk 
+          setiap pelanggan.
+        </p>
+        <div class="flex flex-wrap gap-6">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-[#d4af37]/20 flex items-center justify-center text-[#d4af37]">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <span class="text-sm font-medium">Terdaftar BPOM</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-[#d4af37]/20 flex items-center justify-center text-[#d4af37]">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            </div>
+            <span class="text-sm font-medium">100% Original</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-[#d4af37]/20 flex items-center justify-center text-[#d4af37]">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <span class="text-sm font-medium">Cepat & Aman</span>
+          </div>
+        </div>
+      </div>
+      <div class="relative animate-fade-in-up delay-2">
+        <div class="aspect-[4/5] rounded-3xl overflow-hidden glass p-8 flex items-center justify-center">
+          <div class="text-center">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="mb-6"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            <h3 class="text-2xl font-bold text-white">Apotek Sehat</h3>
+            <p class="text-gray-400 text-sm mt-2">Mitra Kesehatan Keluarga Anda</p>
+            <div class="mt-6 grid grid-cols-2 gap-3 text-center">
+              <div class="glass rounded-xl p-4">
+                <div class="text-[#d4af37] text-xl font-bold">24/7</div>
+                <div class="text-xs text-gray-500">Layanan</div>
+              </div>
+              <div class="glass rounded-xl p-4">
+                <div class="text-[#d4af37] text-xl font-bold">100%</div>
+                <div class="text-xs text-gray-500">Original</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-[#d4af37]/20 rounded-full blur-[60px]"></div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

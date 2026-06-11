@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Testimoni{% endblock %}
+
+{% block content %}
+<section class="min-h-screen py-28 px-6 pt-32 flex items-center">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="text-xs font-semibold tracking-[0.2em] uppercase text-[#d4af37]">Testimoni</span>
+      <h2 class="text-4xl md:text-5xl font-extrabold mt-4 mb-6">
+        Kata <span class="gradient-text">Pelanggan</span>
+      </h2>
+      <p class="text-gray-500 leading-relaxed">
+        Apa kata mereka tentang pelayanan Apotek Sehat.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="glass rounded-2xl p-8 testimonial-card hover-lift">
+        <div class="flex text-[#d4af37] mb-4">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="text-sm text-gray-300 leading-relaxed mb-6">"Pelayanan cepat, obat lengkap, dan apotekernya ramah menjelaskan aturan pakai. Sangat direkomendasikan!"</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-[#d4af37]/30 flex items-center justify-center text-sm font-bold text-[#d4af37]">B</div>
+          <div>
+            <div class="text-sm font-semibold">Bambang S.</div>
+            <div class="text-xs text-gray-500">Pasien Rutin</div>
+          </div>
+        </div>
+      </div>
+      <div class="glass rounded-2xl p-8 testimonial-card hover-lift">
+        <div class="flex text-[#d4af37] mb-4">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="text-sm text-gray-300 leading-relaxed mb-6">"Layanan antar obat gratis sangat membantu. Saya tidak perlu repot keluar rumah untuk tebus resep."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-[#d4af37]/30 flex items-center justify-center text-sm font-bold text-[#d4af37]">D</div>
+          <div>
+            <div class="text-sm font-semibold">Dewi Lestari</div>
+            <div class="text-xs text-gray-500">Ibu Rumah Tangga</div>
+          </div>
+        </div>
+      </div>
+      <div class="glass rounded-2xl p-8 testimonial-card hover-lift">
+        <div class="flex text-[#d4af37] mb-4">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="text-sm text-gray-300 leading-relaxed mb-6">"Harga bersaing, obat original, dan ada program loyalitas. Jadi langganan tetap sejak 2018."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-[#d4af37]/30 flex items-center justify-center text-sm font-bold text-[#d4af37]">H</div>
+          <div>
+            <div class="text-sm font-semibold">Hendra K.</div>
+            <div class="text-xs text-gray-500">Karyawan Swasta</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -158,4 +158,19 @@ def dashboard(request):
     return render(request, 'dashboard.html')
 
 def company_profile(request):
-    return render(request, 'company_profile.html')
+    return render(request, 'company_profile.html', {'active_page': 'beranda'})
+
+def tentang(request):
+    return render(request, 'tentang.html', {'active_page': 'tentang'})
+
+def layanan(request):
+    return render(request, 'layanan.html', {'active_page': 'layanan'})
+
+def tim(request):
+    return render(request, 'tim.html', {'active_page': 'tim'})
+
+def testimoni(request):
+    return render(request, 'testimoni.html', {'active_page': 'testimoni'})
+
+def kontak(request):
+    return render(request, 'kontak.html', {'active_page': 'kontak'})
