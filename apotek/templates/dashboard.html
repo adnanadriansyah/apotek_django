@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -9,8 +9,66 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg-body: #f0f4f8;
+      --bg-main: #f0f4f8;
+      --bg-card: #ffffff;
+      --bg-panel: #ffffff;
+      --bg-topbar: rgba(255,255,255,0.9);
+      --bg-topbar-border: rgba(255,255,255,0.8);
+      --bg-chat: #f8fafc;
+      --bg-input: #ffffff;
+      --bg-th: #0f1724;
+      --bg-hover-row: #f8fafc;
+      --bg-glass: rgba(255,255,255,0.06);
+      --text-primary: #0f1724;
+      --text-body: #333333;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --text-th: #ffffff;
+      --text-label: #64748b;
+      --border-card: rgba(0,0,0,0.04);
+      --border-input: #e2e8f0;
+      --border-table: #f1f5f9;
+      --border-panel: #f1f5f9;
+      --shadow-card: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-topbar: 0 1px 3px rgba(0,0,0,0.05);
+      --toast-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      --bubble-user: #0f1724;
+      --bubble-admin: #e2e8f0;
+    }
+
+    [data-theme="dark"] {
+      --bg-body: #0a0f1a;
+      --bg-main: #0a0f1a;
+      --bg-card: #1a2234;
+      --bg-panel: #1a2234;
+      --bg-topbar: rgba(15,23,36,0.9);
+      --bg-topbar-border: rgba(255,255,255,0.06);
+      --bg-chat: #1a2234;
+      --bg-input: #1a2234;
+      --bg-th: #d4af37;
+      --bg-hover-row: rgba(255,255,255,0.03);
+      --bg-glass: rgba(255,255,255,0.04);
+      --text-primary: #f1f5f9;
+      --text-body: #cbd5e1;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --text-th: #0f1724;
+      --text-label: #94a3b8;
+      --border-card: rgba(255,255,255,0.06);
+      --border-input: rgba(255,255,255,0.1);
+      --border-table: rgba(255,255,255,0.06);
+      --border-panel: rgba(255,255,255,0.06);
+      --shadow-card: 0 1px 3px rgba(0,0,0,0.2);
+      --shadow-topbar: 0 1px 3px rgba(0,0,0,0.2);
+      --toast-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      --bubble-user: #d4af37;
+      --bubble-admin: #2a3a5a;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background: #f0f4f8; color: #333; }
+    body { background: var(--bg-body); color: var(--text-body); transition: background 0.35s ease, color 0.35s ease; }
 
     .sidebar {
       position: fixed; top: 0; left: 0; width: 230px; height: 100vh;
@@ -39,42 +97,65 @@
       font-size: 0.8rem; color: #64748b;
     }
 
-    .main { margin-left: 230px; padding: 25px; min-height: 100vh; }
+    .main {
+      margin-left: 230px; padding: 25px; min-height: 100vh;
+      background: var(--bg-main);
+      transition: background 0.35s ease;
+    }
     .topbar {
-      background: rgba(255,255,255,0.9); backdrop-filter: blur(12px);
+      background: var(--bg-topbar); backdrop-filter: blur(12px);
       padding: 15px 25px; border-radius: 14px;
       margin-bottom: 20px; display: flex; justify-content: space-between;
-      align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,.05);
-      border: 1px solid rgba(255,255,255,0.8);
+      align-items: center; box-shadow: var(--shadow-topbar);
+      border: 1px solid var(--bg-topbar-border);
+      transition: background 0.35s ease, box-shadow 0.35s ease, border 0.35s ease;
     }
-    .topbar h1 { font-size: 1.2rem; font-weight: 700; color: #0f1724; }
+    .topbar h1 { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); transition: color 0.35s ease; }
+
+    .theme-btn {
+      width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border-input);
+      background: var(--bg-card); color: var(--text-muted); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s; font-size: 1rem;
+    }
+    .theme-btn:hover { color: #d4af37; border-color: #d4af37; transform: rotate(15deg); }
 
     .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 15px; margin-bottom: 25px; }
     .card {
-      background: #fff; border-radius: 12px; padding: 20px;
-      text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,.06);
+      background: var(--bg-card); border-radius: 12px; padding: 20px;
+      text-align: center; box-shadow: var(--shadow-card);
       border-top: 3px solid #d4af37;
+      transition: background 0.35s ease, box-shadow 0.35s ease;
     }
-    .card .num { font-size: 2rem; font-weight: 800; color: #0f1724; }
-    .card .label { font-size: 0.8rem; color: #94a3b8; margin-top: 4px; }
+    .card .num { font-size: 2rem; font-weight: 800; color: var(--text-primary); transition: color 0.35s ease; }
+    .card .label { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
 
     .section { display: none; }
     .section.active { display: block; }
 
     .panel {
-      background: #fff; border-radius: 12px; padding: 20px;
-      box-shadow: 0 1px 3px rgba(0,0,0,.06); margin-bottom: 20px;
-      border: 1px solid rgba(0,0,0,.04);
+      background: var(--bg-panel); border-radius: 12px; padding: 20px;
+      box-shadow: var(--shadow-card); margin-bottom: 20px;
+      border: 1px solid var(--border-card);
+      transition: background 0.35s ease, box-shadow 0.35s ease, border 0.35s ease;
     }
-    .panel h3 { margin-bottom: 15px; color: #0f1724; font-weight: 700; font-size: 1rem; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
+    .panel h3 {
+      margin-bottom: 15px; color: var(--text-primary); font-weight: 700;
+      font-size: 1rem; border-bottom: 2px solid var(--border-panel);
+      padding-bottom: 8px; transition: color 0.35s ease, border 0.35s ease;
+    }
 
     table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-    th { background: #0f1724; color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
-    td { padding: 9px 12px; border-bottom: 1px solid #f1f5f9; }
-    tr:hover td { background: #f8fafc; }
+    th { background: var(--bg-th); color: var(--text-th); padding: 10px 12px; text-align: left; font-weight: 600; transition: background 0.35s ease, color 0.35s ease; }
+    td { padding: 9px 12px; border-bottom: 1px solid var(--border-table); transition: border 0.35s ease; }
+    tr:hover td { background: var(--bg-hover-row); }
 
     .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 12px; margin-bottom: 15px; }
-    input, select { width: 100%; padding: 9px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.88rem; }
+    input, select {
+      width: 100%; padding: 9px 12px; border: 1px solid var(--border-input);
+      border-radius: 8px; font-size: 0.88rem; background: var(--bg-input);
+      color: var(--text-body); transition: background 0.35s ease, color 0.35s ease, border 0.35s ease;
+    }
     input:focus, select:focus { outline: none; border-color: #d4af37; box-shadow: 0 0 0 3px rgba(212,175,55,0.1); }
     .btn { padding: 9px 18px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
     .btn-primary { background: #0f1724; color: #fff; }
@@ -87,11 +168,12 @@
     .btn-warning:hover { background: #c9a432; }
     .btn-gold { background: linear-gradient(135deg, #d4af37, #f5d76e); color: #0f1724; }
     .btn-gold:hover { opacity: 0.9; }
-    label { font-size: 0.82rem; color: #64748b; margin-bottom: 3px; display: block; font-weight: 500; }
+    label { font-size: 0.82rem; color: var(--text-label); margin-bottom: 3px; display: block; font-weight: 500; transition: color 0.35s ease; }
 
     .chat-box {
-      height: 320px; overflow-y: auto; border: 1px solid #e2e8f0;
-      border-radius: 10px; padding: 12px; background: #f8fafc; margin-bottom: 12px;
+      height: 320px; overflow-y: auto; border: 1px solid var(--border-input);
+      border-radius: 10px; padding: 12px; background: var(--bg-chat);
+      margin-bottom: 12px; transition: background 0.35s ease, border 0.35s ease;
     }
     .msg { margin-bottom: 10px; }
     .msg .bubble {
@@ -99,9 +181,9 @@
       border-radius: 12px; font-size: 0.88rem; line-height: 1.4;
     }
     .msg.user { text-align: right; }
-    .msg.user .bubble { background: #0f1724; color: #fff; border-bottom-right-radius: 3px; }
-    .msg.admin .bubble { background: #e2e8f0; color: #333; border-bottom-left-radius: 3px; }
-    .msg .meta { font-size: 0.72rem; color: #94a3b8; margin-top: 3px; }
+    .msg.user .bubble { background: var(--bubble-user); color: #fff; border-bottom-right-radius: 3px; }
+    .msg.admin .bubble { background: var(--bubble-admin); color: var(--text-body); border-bottom-left-radius: 3px; }
+    .msg .meta { font-size: 0.72rem; color: var(--text-muted); margin-top: 3px; }
     .chat-input-row { display: flex; gap: 8px; }
     .chat-input-row input { flex: 1; }
 
@@ -113,11 +195,11 @@
       position: fixed; bottom: 25px; right: 25px;
       background: #059669; color: #fff; padding: 12px 20px;
       border-radius: 10px; font-size: 0.9rem; z-index: 9999;
-      display: none; box-shadow: 0 4px 12px rgba(0,0,0,.15);
+      display: none; box-shadow: var(--toast-shadow);
     }
 
     .glass {
-      background: rgba(255,255,255,0.06);
+      background: var(--bg-glass);
       backdrop-filter: blur(16px);
       border: 1px solid rgba(255,255,255,0.1);
     }
@@ -135,6 +217,13 @@
       background: rgba(212,175,55,0.1);
     }
     .profil-icon svg { width: 22px; height: 22px; }
+
+    @keyframes pulse-ring {
+      0% { box-shadow: 0 0 0 0 rgba(212,175,55,0.4); }
+      70% { box-shadow: 0 0 0 12px rgba(212,175,55,0); }
+      100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
+    }
+    .animate-pulse-ring { animation: pulse-ring 2s infinite; }
   </style>
 </head>
 <body>
@@ -186,7 +275,11 @@
   <div class="topbar">
     <h1 id="page-title">Dashboard</h1>
     <div style="display:flex; align-items:center; gap:12px;">
-      <span id="tgl-now" style="color:#94a3b8; font-size:.82rem;"></span>
+      <span id="tgl-now" style="color:var(--text-muted); font-size:.82rem;"></span>
+      <button onclick="toggleTheme()" class="theme-btn" title="Ganti tema">
+        <svg id="dashThemeSun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg id="dashThemeMoon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
     </div>
   </div>
 
@@ -495,6 +588,8 @@ function toast(msg, color='#059669') {
   setTimeout(() => t.style.display = 'none', 3000);
 }
 
+let chatPoll = null;
+
 function showSection(name, el) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
@@ -509,7 +604,17 @@ function showSection(name, el) {
   if (name==='harga') loadHarga();
   if (name==='pembelian') { loadPembelian(); loadBarangSelect(); }
   if (name==='laporan') loadLaporan();
-  if (name==='chat') loadChat();
+  if (name==='chat') { loadChat(); startChatPoll(); }
+  if (name!=='chat') stopChatPoll();
+}
+
+function startChatPoll() {
+  stopChatPoll();
+  chatPoll = setInterval(loadChat, 5000);
+}
+
+function stopChatPoll() {
+  if (chatPoll) { clearInterval(chatPoll); chatPoll = null; }
 }
 
 const now = new Date();
@@ -626,8 +731,8 @@ function hitungTotal() {
 
 async function loadPembelian() {
   const res = await fetch(API+'/api/pembelian/').then(r=>r.json());
-  document.querySelector('#tbl-pembelian tbody').innerHTML = res.data.map(d=>`
-    <tr><td>${d.id}</td><td>${d.nama_barang}</td><td>${d.jumlah_pembelian}</td>
+  document.querySelector('#tbl-pembelian tbody').innerHTML = res.data.map((d, i)=>`
+    <tr><td>${i+1}</td><td>${d.nama_barang}</td><td>${d.jumlah_pembelian}</td>
     <td>Rp ${Number(d.harga).toLocaleString('id-ID')}</td>
     <td>Rp ${Number(d.total_pembayaran).toLocaleString('id-ID')}</td>
     <td>${d.tgl_beli.slice(0,16)}</td></tr>`).join('');
@@ -645,8 +750,8 @@ async function buatPembelian() {
 
 async function loadLaporan() {
   const res = await fetch(API+'/api/laporan/').then(r=>r.json());
-  document.querySelector('#tbl-laporan tbody').innerHTML = res.data.map(d=>`
-    <tr><td>${d.id}</td><td>${d.tgl_laporan}</td><td>${d.total_transaksi} transaksi</td>
+  document.querySelector('#tbl-laporan tbody').innerHTML = res.data.map((d, i)=>`
+    <tr><td>${i+1}</td><td>${d.tgl_laporan}</td><td>${d.total_transaksi} transaksi</td>
     <td>Rp ${Number(d.total_pendapatan).toLocaleString('id-ID')}</td>
     <td>${d.generated_at.slice(0,16)}</td></tr>`).join('');
 }
@@ -659,35 +764,84 @@ async function sinkronLaporan() {
   loadLaporan();
 }
 
+function esc(str) {
+  const el = document.createElement('div');
+  el.textContent = str;
+  return el.innerHTML;
+}
+
 async function loadChat() {
-  const res = await fetch(API+'/api/chat/').then(r=>r.json());
-  const box = document.getElementById('chat-box');
-  box.innerHTML = res.data.map(d=>`
-    <div class="msg ${d.role}">
-      <div class="bubble">${d.pesan}</div>
-      <div class="meta">${d.nama_pengirim} · ${d.tgl_chat.slice(0,16)}</div>
-    </div>`).join('');
-  box.scrollTop = box.scrollHeight;
+  try {
+    const res = await fetch(API+'/api/chat/').then(r=>r.json());
+    const box = document.getElementById('chat-box');
+    if (!res.data) return;
+    box.innerHTML = res.data.map(d=>`
+      <div class="msg ${d.role}">
+        <div class="bubble">${esc(d.pesan)}</div>
+        <div class="meta">${esc(d.nama_pengirim)} · ${(d.tgl_chat||'').slice(0,16)}</div>
+      </div>`).join('');
+    box.scrollTop = box.scrollHeight;
+  } catch(e) {
+    console.error('loadChat error:', e);
+  }
 }
 
 async function kirimChat() {
   const nama = document.getElementById('chat-nama').value.trim();
   const pesan = document.getElementById('chat-pesan').value.trim();
   if (!nama || !pesan) return toast('Isi nama dan pesan!', '#dc2626');
-  await fetch(API+'/api/chat/', { method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ nama_pengirim: nama, pesan: pesan, role:'user' }) });
-  document.getElementById('chat-pesan').value = '';
-  loadChat();
+  try {
+    const res = await fetch(API+'/api/chat/', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ nama_pengirim: nama, pesan: pesan, role:'user' }) }).then(r=>r.json());
+    if (res.status === 'ok') toast(res.message);
+    else toast(res.message || 'Gagal kirim pesan', '#dc2626');
+    document.getElementById('chat-pesan').value = '';
+    loadChat();
+  } catch(e) {
+    toast('Gagal terhubung ke server', '#dc2626');
+  }
 }
 
 async function replyAdmin() {
   const pesan = document.getElementById('admin-pesan').value.trim();
   if (!pesan) return toast('Tulis balasan admin!', '#dc2626');
-  await fetch(API+'/api/chat/admin/reply/', { method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ nama_pengirim:'Admin Apotek', pesan: pesan }) });
-  document.getElementById('admin-pesan').value = '';
-  loadChat();
+  try {
+    const res = await fetch(API+'/api/chat/admin/reply/', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ nama_pengirim:'Admin Apotek', pesan: pesan }) }).then(r=>r.json());
+    if (res.status === 'ok') toast(res.message);
+    else toast(res.message || 'Gagal kirim balasan', '#dc2626');
+    document.getElementById('admin-pesan').value = '';
+    loadChat();
+  } catch(e) {
+    toast('Gagal terhubung ke server', '#dc2626');
+  }
 }
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  localStorage.setItem('dash-theme', html.getAttribute('data-theme'));
+  const sun = document.getElementById('dashThemeSun');
+  const moon = document.getElementById('dashThemeMoon');
+  if (html.getAttribute('data-theme') === 'dark') {
+    sun.style.display = 'none';
+    moon.style.display = '';
+  } else {
+    sun.style.display = '';
+    moon.style.display = 'none';
+  }
+}
+
+(function() {
+  const saved = localStorage.getItem('dash-theme');
+  if (saved === 'dark' || saved === 'light') {
+    document.documentElement.setAttribute('data-theme', saved);
+    const sun = document.getElementById('dashThemeSun');
+    const moon = document.getElementById('dashThemeMoon');
+    if (saved === 'dark') { sun.style.display = 'none'; moon.style.display = ''; }
+  }
+})();
 
 loadDashboard();
 </script>
