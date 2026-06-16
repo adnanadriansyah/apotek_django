@@ -3,42 +3,183 @@
 
 {% block title %}Tim{% endblock %}
 
+{% block extra_head %}
+<style>
+  .team-card {
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .team-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 24px 48px -12px rgba(37,99,168,0.2);
+  }
+  .team-social {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  .team-card:hover .team-social {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-<section class="min-h-screen py-28 px-6 pt-32 flex items-center">
-  <div class="max-w-6xl mx-auto">
-    <div class="text-center max-w-3xl mx-auto mb-16">
+<!-- ── HERO ── -->
+<section class="pt-32 pb-20 px-6 relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-0 left-1/3 w-96 h-96 bg-[#2563a8]/8 rounded-full blur-[140px]"></div>
+    <div class="absolute bottom-0 right-1/3 w-80 h-80 bg-[#2563a8]/10 rounded-full blur-[120px]"></div>
+  </div>
+  <div class="max-w-6xl mx-auto relative z-10">
+    <div class="text-center max-w-3xl mx-auto">
       <span class="text-xs font-semibold tracking-[0.2em] uppercase text-[#2563a8]">Tim Kami</span>
       <h2 class="text-4xl md:text-5xl font-extrabold mt-4 mb-6">
         Tenaga <span class="gradient-text">Profesional</span>
       </h2>
-      <p class="text-gray-500 leading-relaxed">
-        Didukung oleh tenaga farmasi yang kompeten dan berpengalaman di bidangnya.
+      <p class="text-gray-500 leading-relaxed max-w-2xl mx-auto">
+        Didukung oleh tenaga farmasi yang kompeten dan berpengalaman di bidangnya. 
+        Setiap anggota tim berkomitmen memberikan pelayanan terbaik untuk kesehatan Anda.
       </p>
     </div>
+  </div>
+</section>
+
+<!-- ── TEAM GRID ── -->
+<section class="px-6 pb-10">
+  <div class="max-w-6xl mx-auto">
     <div class="grid md:grid-cols-3 gap-6">
-      <div class="glass rounded-2xl p-8 text-center hover-lift">
-        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-[#2563a8] to-[#3b82f6] flex items-center justify-center mb-5 shadow-lg shadow-[#2563a8]/20">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0a0f1a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <div class="glass rounded-2xl p-8 text-center team-card">
+        <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-[#2563a8] to-[#3b82f6] flex items-center justify-center mb-6 shadow-lg shadow-[#2563a8]/20">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         </div>
         <h3 class="text-lg font-bold">dr. Sarah Paramitha</h3>
         <span class="text-xs text-[#2563a8] font-semibold tracking-wide">Apoteker Kepala</span>
-        <p class="text-sm text-gray-500 mt-3 leading-relaxed">Berpengalaman 15 tahun di bidang farmasi klinis dan manajemen apotek.</p>
+        <p class="text-sm text-gray-500 mt-3 leading-relaxed">Berpengalaman 15 tahun di bidang farmasi klinis dan manajemen apotek. Alumni Fakultas Farmasi Universitas Indonesia.</p>
+        <div class="flex items-center justify-center gap-2 mt-5">
+          <span class="team-social" style="background: rgba(37,99,168,0.1); color: #2563a8;">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879v-6.99h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.99C18.343 21.128 22 16.991 22 12z"/></svg>
+          </span>
+          <span class="team-social" style="background: rgba(37,99,168,0.1); color: #2563a8;">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+          </span>
+          <span class="team-social" style="background: rgba(37,99,168,0.1); color: #2563a8;">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2" fill="currentColor"/></svg>
+          </span>
+        </div>
       </div>
-      <div class="glass rounded-2xl p-8 text-center hover-lift">
-        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-[#2563a8] to-[#3b82f6] flex items-center justify-center mb-5 shadow-lg shadow-[#2563a8]/20">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0a0f1a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M17 14a5 5 0 00-10 0"/></svg>
+      <div class="glass rounded-2xl p-8 text-center team-card">
+        <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-[#2563a8] to-[#3b82f6] flex items-center justify-center mb-6 shadow-lg shadow-[#2563a8]/20">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M17 14a5 5 0 00-10 0"/></svg>
         </div>
         <h3 class="text-lg font-bold">apt. Andi Pratama</h3>
         <span class="text-xs text-[#2563a8] font-semibold tracking-wide">Apoteker</span>
-        <p class="text-sm text-gray-500 mt-3 leading-relaxed">Spesialis konseling obat dan manajemen terapi pasien.</p>
+        <p class="text-sm text-gray-500 mt-3 leading-relaxed">Spesialis konseling obat dan manajemen terapi pasien. Berpengalaman 10 tahun di rumah sakit dan apotek komunitas.</p>
+        <div class="flex items-center justify-center gap-2 mt-5">
+          <span class="team-social" style="background: rgba(37,99,168,0.1); color: #2563a8;">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879v-6.99h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.99C18.343 21.128 22 16.991 22 12z"/></svg>
+          </span>
+          <span class="team-social" style="background: rgba(37,99,168,0.1); color: #2563a8;">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+          </span>
+          <span class="team-social" style="background: rgba(37,99,168,0.1); color: #2563a8;">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2" fill="currentColor"/></svg>
+          </span>
+        </div>
       </div>
-      <div class="glass rounded-2xl p-8 text-center hover-lift">
-        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-[#2563a8] to-[#3b82f6] flex items-center justify-center mb-5 shadow-lg shadow-[#2563a8]/20">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0a0f1a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <div class="glass rounded-2xl p-8 text-center team-card">
+        <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-[#2563a8] to-[#3b82f6] flex items-center justify-center mb-6 shadow-lg shadow-[#2563a8]/20">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         </div>
         <h3 class="text-lg font-bold">apt. Rina Wijaya</h3>
         <span class="text-xs text-[#2563a8] font-semibold tracking-wide">Apoteker</span>
-        <p class="text-sm text-gray-500 mt-3 leading-relaxed">Ahli dalam penanganan resep dan pelayanan informasi obat.</p>
+        <p class="text-sm text-gray-500 mt-3 leading-relaxed">Ahli dalam penanganan resep dan pelayanan informasi obat. Berpengalaman 8 tahun di apotek komunitas.</p>
+        <div class="flex items-center justify-center gap-2 mt-5">
+          <span class="team-social" style="background: rgba(37,99,168,0.1); color: #2563a8;">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879v-6.99h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.99C18.343 21.128 22 16.991 22 12z"/></svg>
+          </span>
+          <span class="team-social" style="background: rgba(37,99,168,0.1); color: #2563a8;">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+          </span>
+          <span class="team-social" style="background: rgba(37,99,168,0.1); color: #2563a8;">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2" fill="currentColor"/></svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TEAM EXTRA ── -->
+<section class="px-6 pb-20">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <h2 class="text-3xl md:text-4xl font-extrabold mt-4 mb-4">
+        Tim <span class="gradient-text">Pendukung</span>
+      </h2>
+      <p class="text-gray-500 leading-relaxed">Tenaga profesional lain yang turut mendukung pelayanan kami.</p>
+    </div>
+    <div class="grid md:grid-cols-4 gap-6">
+      <div class="glass rounded-2xl p-6 text-center hover-lift">
+        <div class="w-16 h-16 mx-auto rounded-full bg-gray-200/20 flex items-center justify-center mb-4">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h4 class="text-sm font-bold">Siti Nurhaliza</h4>
+        <span class="text-[10px] text-[#2563a8] font-semibold">Asisten Apoteker</span>
+        <p class="text-xs text-gray-500 mt-2">Berpengalaman 6 tahun</p>
+      </div>
+      <div class="glass rounded-2xl p-6 text-center hover-lift">
+        <div class="w-16 h-16 mx-auto rounded-full bg-gray-200/20 flex items-center justify-center mb-4">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h4 class="text-sm font-bold">Ahmad Fauzi</h4>
+        <span class="text-[10px] text-[#2563a8] font-semibold">Kasir Senior</span>
+        <p class="text-xs text-gray-500 mt-2">Berpengalaman 5 tahun</p>
+      </div>
+      <div class="glass rounded-2xl p-6 text-center hover-lift">
+        <div class="w-16 h-16 mx-auto rounded-full bg-gray-200/20 flex items-center justify-center mb-4">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h4 class="text-sm font-bold">Dian Permata</h4>
+        <span class="text-[10px] text-[#2563a8] font-semibold">Admin Logistik</span>
+        <p class="text-xs text-gray-500 mt-2">Berpengalaman 4 tahun</p>
+      </div>
+      <div class="glass rounded-2xl p-6 text-center hover-lift">
+        <div class="w-16 h-16 mx-auto rounded-full bg-gray-200/20 flex items-center justify-center mb-4">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h4 class="text-sm font-bold">Rizky Hidayat</h4>
+        <span class="text-[10px] text-[#2563a8] font-semibold">Kurir</span>
+        <p class="text-xs text-gray-500 mt-2">Berpengalaman 3 tahun</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<section class="pb-20 px-6">
+  <div class="max-w-4xl mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="glass rounded-2xl p-6 text-center">
+        <div class="text-2xl font-extrabold gradient-text">7+</div>
+        <div class="text-xs text-gray-400 mt-1">Tenaga Ahli</div>
+      </div>
+      <div class="glass rounded-2xl p-6 text-center">
+        <div class="text-2xl font-extrabold gradient-text">45+</div>
+        <div class="text-xs text-gray-400 mt-1">Tahun Pengalaman</div>
+      </div>
+      <div class="glass rounded-2xl p-6 text-center">
+        <div class="text-2xl font-extrabold gradient-text">300+</div>
+        <div class="text-xs text-gray-400 mt-1">Pelatihan Sertifikasi</div>
+      </div>
+      <div class="glass rounded-2xl p-6 text-center">
+        <div class="text-2xl font-extrabold gradient-text">5</div>
+        <div class="text-xs text-gray-400 mt-1">Penghargaan</div>
       </div>
     </div>
   </div>

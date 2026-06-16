@@ -3,9 +3,53 @@
 
 {% block title %}Tentang{% endblock %}
 
+{% block extra_head %}
+<style>
+  .timeline-item {
+    position: relative;
+    padding-left: 32px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 4px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--service-icon-bg);
+    border: 3px solid #2563a8;
+  }
+  .timeline-item::after {
+    content: '';
+    position: absolute;
+    left: 6px; top: 22px;
+    width: 2px;
+    height: calc(100% - 8px);
+    background: var(--border-glass);
+  }
+  .timeline-item:last-child::after { display: none; }
+  .value-card {
+    text-align: center;
+    padding: 32px 24px;
+    border-radius: 16px;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .value-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 32px -8px rgba(37,99,168,0.15);
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-<section class="min-h-screen py-28 px-6 pt-32 flex items-center">
-  <div class="max-w-6xl mx-auto">
+<!-- ── HERO ── -->
+<section class="pt-32 pb-20 px-6 relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-[#2563a8]/8 rounded-full blur-[140px]"></div>
+    <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-[#2563a8]/10 rounded-full blur-[120px]"></div>
+  </div>
+  <div class="max-w-6xl mx-auto relative z-10">
     <div class="grid md:grid-cols-2 gap-16 items-center">
       <div class="animate-fade-in-up">
         <span class="text-xs font-semibold tracking-[0.2em] uppercase text-[#2563a8]">Tentang Kami</span>
@@ -50,6 +94,167 @@
           <img src="{% static 'images/img2.png' %}" alt="Apotek Sehat" class="w-full h-full object-cover">
         </div>
         <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-[#2563a8]/20 rounded-full blur-[60px]"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<section class="pb-20 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="glass rounded-2xl p-6 text-center hover-lift">
+        <div class="stat-number">12+</div>
+        <div class="text-sm text-gray-400 mt-1">Tahun Pelayanan</div>
+      </div>
+      <div class="glass rounded-2xl p-6 text-center hover-lift">
+        <div class="stat-number">50rb+</div>
+        <div class="text-sm text-gray-400 mt-1">Pelanggan Puas</div>
+      </div>
+      <div class="glass rounded-2xl p-6 text-center hover-lift">
+        <div class="stat-number">5000+</div>
+        <div class="text-sm text-gray-400 mt-1">Produk Tersedia</div>
+      </div>
+      <div class="glass rounded-2xl p-6 text-center hover-lift">
+        <div class="stat-number">98%</div>
+        <div class="text-sm text-gray-400 mt-1">Ketersediaan Stok</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VISI & MISI ── -->
+<section class="py-20 px-6" style="background: var(--bg-secondary);">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="text-xs font-semibold tracking-[0.2em] uppercase text-[#2563a8]">Fundasi</span>
+      <h2 class="text-4xl md:text-5xl font-extrabold mt-4 mb-6">
+        Visi & <span class="gradient-text">Misi</span>
+      </h2>
+      <p class="text-gray-500 leading-relaxed">Arah dan tujuan yang menjadi pedoman kami dalam melayani masyarakat.</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-10">
+      <div class="glass rounded-2xl p-8 md:p-10">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6" style="background: var(--service-icon-bg); color: #2563a8;">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-4">Visi</h3>
+        <p class="text-gray-400 leading-relaxed text-base">Menjadi jaringan apotek terdepan di Indonesia yang dikenal karena integritas, inovasi, dan dedikasi terhadap kesehatan masyarakat pada tahun 2030.</p>
+      </div>
+      <div class="glass rounded-2xl p-8 md:p-10">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6" style="background: var(--service-icon-bg); color: #2563a8;">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-4">Misi</h3>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3 text-gray-400 leading-relaxed">
+            <span class="w-5 h-5 rounded-full bg-[#2563a8]/20 flex items-center justify-center text-[#2563a8] shrink-0 mt-0.5">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+            </span>
+            Menyediakan produk kesehatan berkualitas tinggi yang terjamin keasliannya.
+          </li>
+          <li class="flex items-start gap-3 text-gray-400 leading-relaxed">
+            <span class="w-5 h-5 rounded-full bg-[#2563a8]/20 flex items-center justify-center text-[#2563a8] shrink-0 mt-0.5">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+            </span>
+            Memberikan pelayanan farmasi profesional dengan pendekatan personal.
+          </li>
+          <li class="flex items-start gap-3 text-gray-400 leading-relaxed">
+            <span class="w-5 h-5 rounded-full bg-[#2563a8]/20 flex items-center justify-center text-[#2563a8] shrink-0 mt-0.5">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+            </span>
+            Mengedukasi masyarakat tentang penggunaan obat yang tepat dan aman.
+          </li>
+          <li class="flex items-start gap-3 text-gray-400 leading-relaxed">
+            <span class="w-5 h-5 rounded-full bg-[#2563a8]/20 flex items-center justify-center text-[#2563a8] shrink-0 mt-0.5">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+            </span>
+            Terus berinovasi dalam pelayanan melalui teknologi digital terkini.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEJARAH ── -->
+<section class="py-20 px-6">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="text-xs font-semibold tracking-[0.2em] uppercase text-[#2563a8]">Perjalanan</span>
+      <h2 class="text-4xl md:text-5xl font-extrabold mt-4 mb-6">
+        Sejarah <span class="gradient-text">Kami</span>
+      </h2>
+      <p class="text-gray-500 leading-relaxed">Perjalanan panjang dalam melayani kesehatan masyarakat Indonesia.</p>
+    </div>
+    <div class="space-y-10">
+      <div class="timeline-item">
+        <span class="text-xs font-bold text-[#2563a8] tracking-wider">2010</span>
+        <h4 class="text-lg font-bold mt-1 mb-2">Berdirinya Apotek Sehat</h4>
+        <p class="text-sm text-gray-400 leading-relaxed">Apotek Sehat didirikan di Jakarta Utara sebagai apotek kecil dengan 3 orang tenaga farmasi. Berawal dari visi sederhana: menyediakan obat berkualitas dengan pelayanan terbaik.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="text-xs font-bold text-[#2563a8] tracking-wider">2014</span>
+        <h4 class="text-lg font-bold mt-1 mb-2">Ekspansi Layanan</h4>
+        <p class="text-sm text-gray-400 leading-relaxed">Penambahan layanan cek kesehatan gratis dan konsultasi farmasi. Jumlah pelanggan mulai mencapai ribuan per bulan.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="text-xs font-bold text-[#2563a8] tracking-wider">2018</span>
+        <h4 class="text-lg font-bold mt-1 mb-2">Digitalisasi & Mitra Resmi</h4>
+        <p class="text-sm text-gray-400 leading-relaxed">Meluncurkan sistem manajemen digital dan menjadi mitra resmi distributor farmasi terbesar di Indonesia. Stok produk mencapai 5000+ item.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="text-xs font-bold text-[#2563a8] tracking-wider">2022</span>
+        <h4 class="text-lg font-bold mt-1 mb-2">Layanan Online & Antar Gratis</h4>
+        <p class="text-sm text-gray-400 leading-relaxed">Meluncurkan platform pemesanan online dan layanan antar obat gratis. Melayani 50rb+ pelanggan setiap tahunnya.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="text-xs font-bold text-[#2563a8] tracking-wider">2024</span>
+        <h4 class="text-lg font-bold mt-1 mb-2">Menuju Masa Depan</h4>
+        <p class="text-sm text-gray-400 leading-relaxed">Terus berkembang dengan inovasi digital dan komitmen menjadi jaringan apotek terdepan di Indonesia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── NILAI-NILAI ── -->
+<section class="py-20 px-6" style="background: var(--bg-secondary);">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="text-xs font-semibold tracking-[0.2em] uppercase text-[#2563a8]">Budaya</span>
+      <h2 class="text-4xl md:text-5xl font-extrabold mt-4 mb-6">
+        Nilai-Nilai <span class="gradient-text">Kami</span>
+      </h2>
+      <p class="text-gray-500 leading-relaxed">Prinsip yang menjadi fondasi setiap langkah dan keputusan kami.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="value-card">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5" style="background: var(--service-icon-bg); color: #2563a8;">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <h4 class="text-base font-bold mb-2">Integritas</h4>
+        <p class="text-sm text-gray-400 leading-relaxed">Kejujuran dan etika dalam setiap pelayanan dan produk yang kami sediakan.</p>
+      </div>
+      <div class="value-card">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5" style="background: var(--service-icon-bg); color: #2563a8;">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <h4 class="text-base font-bold mb-2">Kepedulian</h4>
+        <p class="text-sm text-gray-400 leading-relaxed">Peduli terhadap kesehatan dan kesejahteraan setiap pelanggan dan masyarakat.</p>
+      </div>
+      <div class="value-card">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5" style="background: var(--service-icon-bg); color: #2563a8;">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <h4 class="text-base font-bold mb-2">Inovasi</h4>
+        <p class="text-sm text-gray-400 leading-relaxed">Terus berinovasi dalam pelayanan dan teknologi untuk kemudahan pelanggan.</p>
+      </div>
+      <div class="value-card">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5" style="background: var(--service-icon-bg); color: #2563a8;">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h4 class="text-base font-bold mb-2">Ketepatan</h4>
+        <p class="text-sm text-gray-400 leading-relaxed">Akurasi dalam pelayanan resep dan ketepatan waktu dalam pengantaran.</p>
       </div>
     </div>
   </div>

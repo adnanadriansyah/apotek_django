@@ -4,16 +4,28 @@
 {% block title %}Kontak{% endblock %}
 
 {% block content %}
-<section class="min-h-screen py-28 px-6 pt-32 flex items-center">
+<!-- ── HERO ── -->
+<section class="pt-32 pb-20 px-6 relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-[#2563a8]/8 rounded-full blur-[140px]"></div>
+    <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-[#2563a8]/10 rounded-full blur-[120px]"></div>
+  </div>
+  <div class="max-w-6xl mx-auto relative z-10">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="text-xs font-semibold tracking-[0.2em] uppercase text-[#2563a8]">Kontak</span>
+      <h2 class="text-4xl md:text-5xl font-extrabold mt-4 mb-6">
+        Hubungi <span class="gradient-text">Kami</span>
+      </h2>
+      <p class="text-gray-500 leading-relaxed">Kami siap membantu Anda. Hubungi kami melalui berbagai saluran berikut.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT INFO + FORM ── -->
+<section class="px-6 pb-20">
   <div class="max-w-6xl mx-auto">
     <div class="grid md:grid-cols-2 gap-16">
       <div>
-        <span class="text-xs font-semibold tracking-[0.2em] uppercase text-[#2563a8]">Kontak</span>
-        <h2 class="text-4xl md:text-5xl font-extrabold mt-4 mb-6 leading-tight">
-          Hubungi<br/>
-          <span class="gradient-text">Kami</span>
-        </h2>
-        <div class="section-divider mb-8"></div>
         <div class="space-y-6">
           <div class="flex items-start gap-4">
             <div class="w-12 h-12 rounded-xl bg-[#2563a8]/10 flex items-center justify-center text-[#2563a8] shrink-0">
@@ -22,6 +34,7 @@
             <div>
               <h4 class="font-semibold text-sm">Alamat</h4>
               <p class="text-sm text-gray-400 mt-1">Jl. Kesehatan No. 123, Kelapa Gading, Jakarta Utara 14240</p>
+              <a href="https://maps.google.com" target="_blank" class="text-xs text-[#2563a8] font-medium mt-1 inline-block hover:underline">Lihat di Google Maps &rarr;</a>
             </div>
           </div>
           <div class="flex items-start gap-4">
@@ -32,6 +45,10 @@
               <h4 class="font-semibold text-sm">Telepon</h4>
               <p class="text-sm text-gray-400 mt-1">(021) 1234-5678</p>
               <p class="text-sm text-gray-500">WhatsApp: 0812-3456-7890</p>
+              <div class="flex gap-2 mt-2">
+                <a href="#" class="text-xs px-3 py-1.5 rounded-full font-medium" style="background: rgba(37,99,168,0.1); color: #2563a8;">Hubungi WA</a>
+                <a href="#" class="text-xs px-3 py-1.5 rounded-full font-medium" style="background: rgba(37,99,168,0.1); color: #2563a8;">Telpon</a>
+              </div>
             </div>
           </div>
           <div class="flex items-start gap-4">
@@ -41,6 +58,8 @@
             <div>
               <h4 class="font-semibold text-sm">Email</h4>
               <p class="text-sm text-gray-400 mt-1">info@apoteksehat.co.id</p>
+              <p class="text-sm text-gray-500">cs@apoteksehat.co.id</p>
+              <span class="text-xs px-2 py-0.5 rounded" style="background: rgba(37,99,168,0.08); color: #2563a8;">Response 1x24 jam</span>
             </div>
           </div>
           <div class="flex items-start gap-4">
@@ -54,7 +73,28 @@
             </div>
           </div>
         </div>
+
+        <!-- Social Media -->
+        <div class="mt-12">
+          <h4 class="font-semibold text-sm mb-4">Ikuti Kami</h4>
+          <div class="flex gap-3">
+            <a href="#" class="w-12 h-12 rounded-xl flex items-center justify-center transition-all hover:-translate-y-1" style="background: var(--service-icon-bg); color: #2563a8;">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879v-6.99h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.99C18.343 21.128 22 16.991 22 12z"/></svg>
+            </a>
+            <a href="#" class="w-12 h-12 rounded-xl flex items-center justify-center transition-all hover:-translate-y-1" style="background: var(--service-icon-bg); color: #2563a8;">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+            </a>
+            <a href="#" class="w-12 h-12 rounded-xl flex items-center justify-center transition-all hover:-translate-y-1" style="background: var(--service-icon-bg); color: #2563a8;">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2" fill="currentColor"/></svg>
+            </a>
+            <a href="#" class="w-12 h-12 rounded-xl flex items-center justify-center transition-all hover:-translate-y-1" style="background: var(--service-icon-bg); color: #2563a8;">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29.23 29.23 0 001 11.75a29.23 29.23 0 00.46 5.33A2.78 2.78 0 003.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29.23 29.23 0 00.46-5.33 29.23 29.23 0 00-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+            </a>
+          </div>
+        </div>
       </div>
+
+      <!-- Form -->
       <div class="glass rounded-3xl p-8 md:p-10">
         <h3 class="text-2xl font-bold mb-2">Kirim Pesan</h3>
         <p class="text-sm text-gray-400 mb-8">Kami akan merespon dalam 1x24 jam.</p>
@@ -70,6 +110,10 @@
             </div>
           </div>
           <div>
+            <label class="text-xs text-gray-400 font-medium block mb-2">No. Telepon</label>
+            <input type="tel" placeholder="0812-3456-7890" class="w-full px-4 py-3 rounded-xl bg-white border border-[#2563a8]/20 text-[#0f1b2d] placeholder-gray-400 focus:outline-none focus:border-[#2563a8] focus:ring-1 focus:ring-[#2563a8] transition-all text-sm"/>
+          </div>
+          <div>
             <label class="text-xs text-gray-400 font-medium block mb-2">Subjek</label>
             <input type="text" placeholder="Subjek pesan" class="w-full px-4 py-3 rounded-xl bg-white border border-[#2563a8]/20 text-[#0f1b2d] placeholder-gray-400 focus:outline-none focus:border-[#2563a8] focus:ring-1 focus:ring-[#2563a8] transition-all text-sm"/>
           </div>
@@ -77,10 +121,29 @@
             <label class="text-xs text-gray-400 font-medium block mb-2">Pesan</label>
             <textarea rows="4" placeholder="Tulis pesan Anda..." class="w-full px-4 py-3 rounded-xl bg-white border border-[#2563a8]/20 text-[#0f1b2d] placeholder-gray-400 focus:outline-none focus:border-[#2563a8] focus:ring-1 focus:ring-[#2563a8] transition-all text-sm resize-none"></textarea>
           </div>
+          <div class="flex items-center gap-3">
+            <input type="checkbox" id="copy" class="w-4 h-4 rounded border-gray-300 text-[#2563a8] focus:ring-[#2563a8]">
+            <label for="copy" class="text-xs text-gray-400">Kirim salinan ke email saya</label>
+          </div>
           <button type="submit" class="w-full py-3.5 rounded-xl text-sm font-bold text-white gradient-accent hover:opacity-90 transition-all shadow-lg shadow-[#2563a8]/20">
             Kirim Pesan &rarr;
           </button>
         </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MAP ── -->
+<section class="px-6 pb-20">
+  <div class="max-w-6xl mx-auto">
+    <div class="glass rounded-3xl overflow-hidden">
+      <div class="aspect-[21/9] bg-gray-200/10 flex items-center justify-center">
+        <div class="text-center">
+          <svg class="w-12 h-12 text-[#2563a8] mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <p class="text-sm text-gray-400">Jl. Kesehatan No. 123, Kelapa Gading, Jakarta Utara</p>
+          <a href="https://maps.google.com" target="_blank" class="text-xs text-[#2563a8] font-medium mt-2 inline-block hover:underline">Buka di Google Maps &rarr;</a>
+        </div>
       </div>
     </div>
   </div>
