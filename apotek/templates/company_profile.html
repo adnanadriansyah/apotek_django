@@ -16,12 +16,11 @@
         Sejak 2010 &bull; Terpercaya
       </div>
       <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-[1.05] tracking-tight mb-6 animate-fade-in-up delay-1 text-[#0f1b2d]">
-        Kesehatan<br/>
-        <span class="gradient-text">Mitra Terbaik</span>
+        Kesehatan Anda,<br/>
+        <span class="gradient-text">Prioritas Kami</span>
       </h1>
       <p class="max-w-2xl mx-auto text-lg md:text-xl text-[#5a6a85] leading-relaxed mb-10 animate-fade-in-up delay-2">
-        Apotek terpercaya dengan layanan lengkap, obat original, dan tenaga farmasi profesional 
-        yang siap membantu kesehatan Anda dan keluarga.
+        Solusi kesehatan lengkap dengan layanan profesional dan obat original untuk Anda dan keluarga.
       </p>
       <div class="flex flex-wrap justify-center gap-4 animate-fade-in-up delay-3">
         <a href="/layanan/" class="px-8 py-3.5 rounded-full text-sm font-bold text-white gradient-accent hover:opacity-90 transition-all shadow-lg shadow-[#2563a8]/20">
@@ -38,34 +37,34 @@
   </section>
 
   <!-- ── STATS ── -->
-  <section class="relative -mt-20 z-20 max-w-6xl mx-auto px-6">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+  <section class="relative z-20 max-w-6xl mx-auto px-6 py-16">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
       <div class="glass rounded-2xl p-6 text-center hover-lift">
         <div class="stat-number">12+</div>
-        <div class="text-sm text-gray-400 mt-1">Tahun Pelayanan</div>
+        <div class="text-sm text-gray-400 mt-2">Tahun Pelayanan</div>
       </div>
       <div class="glass rounded-2xl p-6 text-center hover-lift">
         <div class="stat-number">50rb+</div>
-        <div class="text-sm text-gray-400 mt-1">Pelanggan Puas</div>
+        <div class="text-sm text-gray-400 mt-2">Pelanggan Puas</div>
       </div>
       <div class="glass rounded-2xl p-6 text-center hover-lift">
         <div class="stat-number">5000+</div>
-        <div class="text-sm text-gray-400 mt-1">Produk Tersedia</div>
+        <div class="text-sm text-gray-400 mt-2">Produk Tersedia</div>
       </div>
       <div class="glass rounded-2xl p-6 text-center hover-lift">
         <div class="stat-number">98%</div>
-        <div class="text-sm text-gray-400 mt-1">Ketersediaan Stok</div>
+        <div class="text-sm text-gray-400 mt-2">Ketersediaan Stok</div>
       </div>
     </div>
   </section>
 
   <!-- ── AUTO HORIZONTAL SCROLL: Produk Unggulan ── -->
-  <section class="py-24 md:py-32 px-6 relative overflow-hidden select-none" id="produk">
-    <div class="max-w-6xl mx-auto mb-14 px-6 md:px-0">
+  <section class="py-20 px-6 relative overflow-hidden select-none" id="produk">
+    <div class="max-w-6xl mx-auto mb-10 px-6 md:px-0">
       <div class="flex items-end justify-between">
         <div>
-          <span class="text-xs font-semibold tracking-[0.2em] uppercase text-[#2563a8]">Koleksi</span>
-          <h2 class="text-4xl md:text-5xl font-extrabold mt-4">
+          <span class="text-xs font-semibold tracking-[0.2em] uppercase text-[#2563a8] mb-2 block">Koleksi</span>
+          <h2 class="text-4xl md:text-5xl font-extrabold">
             Produk <span class="gradient-text">Unggulan</span>
           </h2>
           <p class="text-gray-400 mt-3 max-w-md leading-relaxed">Koleksi produk terbaik untuk kesehatan Anda.</p>
@@ -81,23 +80,21 @@
       <div class="scroll-gradient-left"></div>
       <div class="scroll-gradient-right"></div>
 
-      <div class="h-scroll flex gap-8 px-6 md:px-12 pb-6" id="hScroll">
+      <div class="h-scroll flex gap-6 px-6 md:px-12 pb-6" id="hScroll">
         {% for p in produk_list %}
         <div class="h-scroll-card w-[340px] md:w-[420px] shrink-0" data-index="{{ forloop.counter0 }}">
-          <div class="glass rounded-2xl h-full flex flex-col overflow-hidden">
+          <div class="glass rounded-xl h-full flex flex-col overflow-hidden">
             <div class="h-2 gradient-accent"></div>
-            <div class="p-8 flex flex-col flex-1">
-              <div class="flex items-center gap-4 mb-6">
-                <div class="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-sm" style="background: var(--service-icon-bg); color: #2563a8;">
+            <div class="p-6 flex flex-col flex-1">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-14 h-14 rounded-xl flex items-center justify-center shrink-0" style="background: var(--service-icon-bg); color: #2563a8;">
                   {{ p.icon|safe }}
                 </div>
-                <div>
-                  <span class="text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg" style="background: rgba(37,99,168,0.1); color: #2563a8;">{{ p.badge }}</span>
-                </div>
+                <span class="text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg" style="background: rgba(37,99,168,0.1); color: #2563a8;">{{ p.badge }}</span>
               </div>
-              <h3 class="text-xl font-bold mb-3 leading-snug">{{ p.nama }}</h3>
-              <p class="text-sm text-gray-400 leading-relaxed flex-1 mb-6">{{ p.deskripsi }}</p>
-              <div class="flex items-center justify-between pt-5 border-t border-[var(--border-glass)]">
+              <h3 class="text-xl font-bold mb-2 leading-snug">{{ p.nama }}</h3>
+              <p class="text-sm text-gray-400 leading-relaxed flex-1 mb-4">{{ p.deskripsi }}</p>
+              <div class="flex items-center justify-between pt-4 border-t border-[var(--border-glass)]">
                 <span class="text-2xl font-extrabold tracking-tight" style="background: linear-gradient(135deg, #2563a8, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">{{ p.harga }}</span>
                 <span class="text-xs font-semibold px-4 py-2 rounded-xl" style="background: rgba(37,99,168,0.08); color: #2563a8;">{{ p.status }}</span>
               </div>
