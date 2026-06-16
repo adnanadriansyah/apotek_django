@@ -19,27 +19,22 @@
     .gradient-accent {
       background: linear-gradient(135deg, #2563a8 0%, #3b82f6 50%, #2563a8 100%);
     }
-    .gradient-bg {
-      background: linear-gradient(135deg, #f0f5ff 0%, #e0ecff 30%, #d0e0ff 70%, #f0f5ff 100%);
+    .login-overlay {
+      background: linear-gradient(135deg, rgba(240,245,255,0.92) 0%, rgba(224,236,255,0.88) 50%, rgba(208,224,255,0.85) 100%);
     }
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-15px); }
     }
-    @keyframes pulse-glow {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.6; }
-    }
     .animate-float { animation: float 6s ease-in-out infinite; }
-    .animate-glow { animation: pulse-glow 4s ease-in-out infinite; }
   </style>
 </head>
-<body class="gradient-bg min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+<body class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
 
-  <!-- Background Orbs -->
-  <div class="absolute top-20 left-10 w-72 h-72 bg-[#2563a8] rounded-full blur-[120px] opacity-12 animate-glow"></div>
-  <div class="absolute bottom-20 right-10 w-96 h-96 bg-[#2563a8] rounded-full blur-[140px] opacity-15 animate-glow" style="animation-delay: 2s;"></div>
-  <div class="absolute top-1/3 right-1/4 w-48 h-48 bg-[#2563a8] rounded-full blur-[100px] opacity-10 animate-glow" style="animation-delay: 1s;"></div>
+  <div class="absolute inset-0">
+    <img src="{% static 'images/background.avif' %}" alt="" class="w-full h-full object-cover">
+    <div class="absolute inset-0 login-overlay"></div>
+  </div>
 
   <div class="relative z-10 w-full max-w-md">
     <!-- Logo -->

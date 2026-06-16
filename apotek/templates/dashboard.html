@@ -635,9 +635,9 @@ document.getElementById('tgl-laporan').value = now.toISOString().split('T')[0];
 
 async function loadDashboard() {
   const [br, st, bl] = await Promise.all([
-    fetch(API+'/api/barang/').then(r=>r.json()),
-    fetch(API+'/api/stok/').then(r=>r.json()),
-    fetch(API+'/api/pembelian/').then(r=>r.json()),
+    get(API+'/api/barang/'),
+    get(API+'/api/stok/'),
+    get(API+'/api/pembelian/'),
   ]);
   document.getElementById('cnt-barang').textContent = br.data.length;
   const totalStok = st.data.reduce((a,b)=>a+b.jumlah_stok, 0);
@@ -654,11 +654,22 @@ async function loadDashboard() {
 }
 
 async function loadBarang() {
-  const res = await fetch(API+'/api/barang/').then(r=>r.json());
+  const res = await get(API+'/api/barang/');
   document.querySelector('#tbl-barang tbody').innerHTML = res.data.map(d=>`
     <tr><td>${d.id}</td><td>${d.nama_barang}</td><td>${d.pemasok}</td><td>${d.jumlah_barang}</td>
     <td>${d.tgl_expired}</td>
     <td><button class="btn btn-danger" onclick="hapusBarang(${d.id})">Hapus</button></td></tr>`).join('');
+}
+
+function get(endpoint) {
+  return fetch(endpoint + '?_t=' + Date.now()).then(r => r.json());
+}
+
+function clearForm(ids) {
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { if (el.type === 'number') el.value = ''; else el.value = ''; }
+  });
 }
 
 async function tambahBarang() {
@@ -673,18 +684,19 @@ async function tambahBarang() {
     return toast('Lengkapi semua field!', '#dc2626');
   const res = await fetch(API+'/api/barang/', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) }).then(r=>r.json());
   toast(res.message);
-  loadBarang();
+  clearForm(['b-nama','b-pemasok','b-jumlah','b-expired','b-harga']);
+  await loadBarang(); await loadDashboard();
 }
 
 async function hapusBarang(id) {
   if (!confirm('Hapus barang ini?')) return;
   await fetch(API+'/api/barang/'+id+'/', { method:'DELETE' });
   toast('Barang dihapus', '#dc2626');
-  loadBarang();
+  await loadBarang(); await loadDashboard();
 }
 
 async function loadStok() {
-  const res = await fetch(API+'/api/stok/').then(r=>r.json());
+  const res = await get(API+'/api/stok/');
   document.querySelector('#tbl-stok tbody').innerHTML = res.data.map(d=>`
     <tr><td>${d.id}</td><td>${d.barang_id}</td><td>${d.nama_barang}</td><td>${d.jumlah_stok}</td>
     <td><span class="badge ${d.jumlah_stok>10?'badge-ok':'badge-low'}">${d.jumlah_stok>10?'Cukup':'Rendah'}</span></td>
@@ -696,11 +708,11 @@ async function updateStok(id) {
   const val = document.getElementById('stok-'+id).value;
   const res = await fetch(API+'/api/stok/'+id+'/', { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify({jumlah_stok: parseInt(val)}) }).then(r=>r.json());
   toast(res.message);
-  loadStok();
+  await loadStok(); await loadDashboard();
 }
 
 async function loadHarga() {
-  const res = await fetch(API+'/api/harga/').then(r=>r.json());
+  const res = await get(API+'/api/harga/');
   document.querySelector('#tbl-harga tbody').innerHTML = res.data.map(d=>`
     <tr><td>${d.id}</td><td>${d.barang_id}</td><td>${d.nama_barang}</td>
     <td>Rp ${Number(d.harga_satuan).toLocaleString('id-ID')}</td>
@@ -712,14 +724,14 @@ async function updateHarga(id) {
   const val = document.getElementById('hrg-'+id).value;
   const res = await fetch(API+'/api/harga/'+id+'/', { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify({harga_satuan: parseFloat(val)}) }).then(r=>r.json());
   toast(res.message);
-  loadHarga();
+  await loadHarga(); await loadDashboard();
 }
 
 let hargaMap = {};
 async function loadBarangSelect() {
   const [br, hr] = await Promise.all([
-    fetch(API+'/api/barang/').then(r=>r.json()),
-    fetch(API+'/api/harga/').then(r=>r.json()),
+    get(API+'/api/barang/'),
+    get(API+'/api/harga/'),
   ]);
   hargaMap = {};
   hr.data.forEach(h => hargaMap[h.barang_id] = h.harga_satuan);
@@ -742,7 +754,7 @@ function hitungTotal() {
 }
 
 async function loadPembelian() {
-  const res = await fetch(API+'/api/pembelian/').then(r=>r.json());
+  const res = await get(API+'/api/pembelian/');
   document.querySelector('#tbl-pembelian tbody').innerHTML = res.data.map((d, i)=>`
     <tr><td>${i+1}</td><td>${d.nama_barang}</td><td>${d.jumlah_pembelian}</td>
     <td>Rp ${Number(d.harga).toLocaleString('id-ID')}</td>
@@ -756,12 +768,12 @@ async function buatPembelian() {
   if (!id_barang || !jumlah) return toast('Pilih barang dan isi jumlah!', '#dc2626');
   const res = await fetch(API+'/api/pembelian/', { method:'POST', headers:{'Content-Type':'application/json'},
     body:JSON.stringify({ id_barang: parseInt(id_barang), jumlah_pembelian: jumlah }) }).then(r=>r.json());
-  if (res.status === 'ok') { toast(res.message); loadPembelian(); }
+  if (res.status === 'ok') { toast(res.message); await loadPembelian(); await loadDashboard(); document.getElementById('p-barang').value = ''; document.getElementById('p-jumlah').value = ''; document.getElementById('p-harga').value = ''; document.getElementById('p-total').value = ''; }
   else toast(res.message, '#dc2626');
 }
 
 async function loadLaporan() {
-  const res = await fetch(API+'/api/laporan/').then(r=>r.json());
+  const res = await get(API+'/api/laporan/');
   document.querySelector('#tbl-laporan tbody').innerHTML = res.data.map((d, i)=>`
     <tr><td>${i+1}</td><td>${d.tgl_laporan}</td><td>${d.total_transaksi} transaksi</td>
     <td>Rp ${Number(d.total_pendapatan).toLocaleString('id-ID')}</td>
@@ -773,7 +785,7 @@ async function sinkronLaporan() {
   const res = await fetch(API+'/api/laporan/', { method:'POST', headers:{'Content-Type':'application/json'},
     body: JSON.stringify({ tgl_laporan: tgl }) }).then(r=>r.json());
   toast(res.message);
-  loadLaporan();
+  await loadLaporan(); await loadDashboard();
 }
 
 function exportExcel() {
@@ -792,7 +804,7 @@ function esc(str) {
 
 async function loadChat() {
   try {
-    const res = await fetch(API+'/api/chat/').then(r=>r.json());
+    const res = await get(API+'/api/chat/');
     const box = document.getElementById('chat-box');
     if (!res.data) return;
     box.innerHTML = res.data.map(d=>`
@@ -816,7 +828,7 @@ async function kirimChat() {
     if (res.status === 'ok') toast(res.message);
     else toast(res.message || 'Gagal kirim pesan', '#dc2626');
     document.getElementById('chat-pesan').value = '';
-    loadChat();
+    await loadChat();
   } catch(e) {
     toast('Gagal terhubung ke server', '#dc2626');
   }
@@ -831,7 +843,7 @@ async function replyAdmin() {
     if (res.status === 'ok') toast(res.message);
     else toast(res.message || 'Gagal kirim balasan', '#dc2626');
     document.getElementById('admin-pesan').value = '';
-    loadChat();
+    await loadChat();
   } catch(e) {
     toast('Gagal terhubung ke server', '#dc2626');
   }
