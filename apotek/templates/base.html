@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="id" data-theme="dark">
+<html lang="id" data-theme="light">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -11,6 +11,32 @@
   {% block extra_head %}{% endblock %}
   <style>
     :root {
+      --bg-primary: #f0f5ff;
+      --bg-secondary: #e8f0fe;
+      --bg-tertiary: #dce5f5;
+      --bg-glass: rgba(255,255,255,0.7);
+      --bg-glass-dark: rgba(0,0,0,0.03);
+      --bg-glass-hover: rgba(255,255,255,0.9);
+      --border-glass: rgba(0,0,0,0.08);
+      --border-glass-dark: rgba(0,0,0,0.04);
+      --text-primary: #0f1b2d;
+      --text-secondary: #5a6a85;
+      --text-muted: #94a3b8;
+      --text-nav: #5a6a85;
+      --text-nav-hover: #0f1b2d;
+      --text-footer: #94a3b8;
+      --text-footer-muted: #cbd5e1;
+      --card-hover: rgba(0,0,0,0.02);
+      --nav-bg: #ffffff;
+      --footer-border: rgba(0,0,0,0.06);
+      --shimmer-bg: rgba(0,0,0,0.03);
+      --section-divider: linear-gradient(90deg, transparent, rgba(37,99,168,0.25), transparent);
+      --gradient-primary: linear-gradient(135deg, #f0f5ff 0%, #e0ecff 50%, #d0e0ff 100%);
+      --gradient-hero: linear-gradient(135deg, #f0f5ff 0%, #e0ecff 50%, #d0e0ff 100%);
+      --service-icon-bg: linear-gradient(135deg, #dce5f5, #c0d4f0);
+    }
+
+    [data-theme="dark"] {
       --bg-primary: #0a0f1a;
       --bg-secondary: #0d1422;
       --bg-tertiary: #1a2a4a;
@@ -30,36 +56,10 @@
       --nav-bg: rgba(0,0,0,0.2);
       --footer-border: rgba(255,255,255,0.05);
       --shimmer-bg: rgba(255,255,255,0.06);
-      --section-divider: linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent);
+      --section-divider: linear-gradient(90deg, transparent, rgba(37,99,168,0.25), transparent);
       --gradient-primary: linear-gradient(135deg, #0f1724 0%, #1a2a4a 50%, #1e3a5f 100%);
       --gradient-hero: linear-gradient(135deg, #0f1724 0%, #1a2a4a 50%, #1e3a5f 100%);
       --service-icon-bg: linear-gradient(135deg, #1a2a4a, #2a4a7a);
-    }
-
-    [data-theme="light"] {
-      --bg-primary: #f8fafc;
-      --bg-secondary: #f1f5f9;
-      --bg-tertiary: #e2e8f0;
-      --bg-glass: rgba(255,255,255,0.7);
-      --bg-glass-dark: rgba(0,0,0,0.03);
-      --bg-glass-hover: rgba(255,255,255,0.9);
-      --border-glass: rgba(0,0,0,0.08);
-      --border-glass-dark: rgba(0,0,0,0.04);
-      --text-primary: #0f1724;
-      --text-secondary: #475569;
-      --text-muted: #94a3b8;
-      --text-nav: #475569;
-      --text-nav-hover: #0f1724;
-      --text-footer: #94a3b8;
-      --text-footer-muted: #cbd5e1;
-      --card-hover: rgba(0,0,0,0.02);
-      --nav-bg: rgba(255,255,255,0.8);
-      --footer-border: rgba(0,0,0,0.06);
-      --shimmer-bg: rgba(0,0,0,0.03);
-      --section-divider: linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent);
-      --gradient-primary: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
-      --gradient-hero: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
-      --service-icon-bg: linear-gradient(135deg, #e2e8f0, #cbd5e1);
     }
 
     * {
@@ -71,6 +71,13 @@
     body {
       background: var(--bg-primary);
       color: var(--text-primary);
+    }
+
+    .hero-overlay {
+      background: linear-gradient(135deg, rgba(240,245,255,0.92) 0%, rgba(224,236,255,0.88) 50%, rgba(208,224,255,0.85) 100%);
+    }
+    [data-theme="dark"] .hero-overlay {
+      background: linear-gradient(135deg, rgba(15,23,36,0.92) 0%, rgba(26,42,74,0.88) 50%, rgba(30,58,95,0.85) 100%);
     }
 
     .glass {
@@ -90,20 +97,20 @@
     }
 
     .gradient-text {
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      background: linear-gradient(135deg, #0f1b2d 0%, #1e3a5f 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    [data-theme="light"] .gradient-text {
-      background: linear-gradient(135deg, #0f1724 0%, #1e293b 100%);
+    [data-theme="dark"] .gradient-text {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
     .gradient-accent {
-      background: linear-gradient(135deg, #d4af37 0%, #f5d76e 50%, #d4af37 100%);
+      background: linear-gradient(135deg, #2563a8 0%, #3b82f6 50%, #2563a8 100%);
     }
     .gradient-primary {
       background: var(--gradient-primary);
@@ -128,7 +135,7 @@
       left: 0;
       width: 0;
       height: 2px;
-      background: linear-gradient(90deg, #d4af37, #f5d76e);
+      background: linear-gradient(90deg, #2563a8, #3b82f6);
       transition: width 0.3s;
     }
     .nav-link:hover::after { width: 100%; }
@@ -143,7 +150,7 @@
     }
     .theme-toggle:hover {
       background: var(--bg-glass-hover);
-      color: #d4af37; border-color: rgba(212,175,55,0.3);
+      color: #2563a8; border-color: rgba(37,99,168,0.3);
       transform: rotate(15deg);
     }
 
@@ -152,7 +159,7 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 1.6rem;
       background: var(--service-icon-bg);
-      color: #d4af37;
+      color: #2563a8;
     }
 
     .section-divider {
@@ -162,7 +169,7 @@
 
     .stat-number {
       font-size: 2.8rem; font-weight: 800;
-      background: linear-gradient(135deg, #d4af37, #f9e07f);
+      background: linear-gradient(135deg, #2563a8, #3b82f6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -193,9 +200,9 @@
       to { transform: rotate(360deg); }
     }
     @keyframes pulse-ring {
-      0% { box-shadow: 0 0 0 0 rgba(212,175,55,0.4); }
-      70% { box-shadow: 0 0 0 12px rgba(212,175,55,0); }
-      100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
+      0% { box-shadow: 0 0 0 0 rgba(37,99,168,0.4); }
+      70% { box-shadow: 0 0 0 12px rgba(37,99,168,0); }
+      100% { box-shadow: 0 0 0 0 rgba(37,99,168,0); }
     }
 
     .animate-float { animation: float 5s ease-in-out infinite; }
@@ -215,15 +222,81 @@
     }
 
     .testimonial-card {
-      border-left: 3px solid #d4af37;
+      border-left: 3px solid #2563a8;
     }
 
-    [data-theme="light"] .glass p,
-    [data-theme="light"] .glass .text-gray-400 { color: #64748b; }
-    [data-theme="light"] .glass .text-gray-500 { color: #94a3b8; }
-    [data-theme="light"] .glass .text-gray-300 { color: #334155; }
-    [data-theme="light"] .stat-number {
-      background: linear-gradient(135deg, #d4af37, #c9a432);
+    /* ── Auto Horizontal Scroll ── */
+    .h-scroll {
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .h-scroll::-webkit-scrollbar { display: none; }
+    .h-scroll-card {
+      scroll-snap-align: start;
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.5s ease;
+      user-select: none;
+    }
+    .h-scroll-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 24px 48px -12px rgba(0,0,0,0.18);
+    }
+
+    .scroll-gradient-left,
+    .scroll-gradient-right {
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 80px;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .scroll-gradient-left {
+      left: 0;
+      background: linear-gradient(to right, var(--bg-primary), transparent);
+    }
+    .scroll-gradient-right {
+      right: 0;
+      background: linear-gradient(to left, var(--bg-primary), transparent);
+    }
+
+    .scroll-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      opacity: 0.25;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+    }
+    .scroll-dot.active {
+      width: 32px;
+      border-radius: 4px;
+      opacity: 1;
+      background: linear-gradient(90deg, #2563a8, #3b82f6);
+    }
+
+    @keyframes scrollIndicator {
+      0%, 100% { transform: translateX(0); opacity: 0.6; }
+      50% { transform: translateX(10px); opacity: 1; }
+    }
+    .scroll-hint {
+      animation: scrollIndicator 1.8s ease-in-out infinite;
+    }
+
+    @keyframes hScrollPulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.8; }
+    }
+
+    [data-theme="dark"] .glass p,
+    [data-theme="dark"] .glass .text-gray-400 { color: #64748b; }
+    [data-theme="dark"] .glass .text-gray-500 { color: #94a3b8; }
+    [data-theme="dark"] .glass .text-gray-300 { color: #334155; }
+    [data-theme="dark"] .stat-number {
+      background: linear-gradient(135deg, #2563a8, #3b82f6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -233,11 +306,11 @@
 <body class="bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased">
 
   {% block navbar %}
-  <nav class="fixed top-0 left-0 w-full z-50" style="background: var(--nav-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-glass-dark);">
+  <nav class="fixed top-0 left-0 w-full z-50" style="background: var(--nav-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #e5eaf3;">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
       <a href="/" class="flex items-center gap-2">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-        <span class="text-lg font-bold tracking-tight" style="color: var(--text-primary);">Apotek <span class="text-[#d4af37]">Sehat</span></span>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <span class="text-lg font-bold tracking-tight" style="color: var(--text-primary);">Apotek <span class="text-[#2563a8]">Sehat</span></span>
       </a>
       <div class="hidden md:flex items-center gap-8 text-sm font-medium" style="color: var(--text-nav);">
         <a href="/" class="nav-link {% if active_page == 'beranda' %}active{% endif %}">Beranda</a>
@@ -255,7 +328,7 @@
         <a href="/login/" class="px-5 py-2.5 rounded-full text-sm font-semibold border transition-all" style="color: var(--text-nav); border-color: var(--border-glass);">
           Masuk
         </a>
-        <a href="/login/" class="px-5 py-2.5 rounded-full text-sm font-semibold text-[#0a0f1a] gradient-accent hover:opacity-90 transition-all shadow-lg shadow-[#d4af37]/20">
+        <a href="/login/" class="px-5 py-2.5 rounded-full text-sm font-semibold text-white gradient-accent hover:opacity-90 transition-all shadow-lg shadow-[#2563a8]/30">
           Dashboard &rarr;
         </a>
       </div>
@@ -270,8 +343,8 @@
     <div class="max-w-6xl mx-auto">
       <div class="flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="flex items-center gap-2">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-          <span class="text-sm font-bold" style="color: var(--text-primary);">Apotek <span class="text-[#d4af37]">Sehat</span></span>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <span class="text-sm font-bold" style="color: var(--text-primary);">Apotek <span class="text-[#2563a8]">Sehat</span></span>
         </div>
         <p class="text-xs" style="color: var(--text-footer);">&copy; 2024 Apotek Sehat. All rights reserved.</p>
         <div class="flex items-center gap-4">
@@ -311,8 +384,7 @@
     if (saved === 'light' || saved === 'dark') {
       setTheme(saved);
     } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setTheme(prefersDark ? 'dark' : 'light');
+      setTheme('light');
     }
 
     document.querySelectorAll('[class*="animate-fade-in-up"]').forEach(el => {

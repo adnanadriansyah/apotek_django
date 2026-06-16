@@ -40,6 +40,8 @@ urlpatterns = [
 
     # ── API: Laporan (Sinkronisasi) ───────────────────────
     path('api/laporan/', transaksi_views.sinkronisasi_laporan, name='laporan-list'),
+    path('api/laporan/export/excel/', transaksi_views.export_laporan_excel, name='laporan-export-excel'),
+    path('api/laporan/export/pdf/', transaksi_views.export_laporan_pdf, name='laporan-export-pdf'),
 
     # ── API: Chat Pemesanan ───────────────────────────────
     path('api/chat/', chat_views.chat_list, name='chat-list'),

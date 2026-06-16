@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Laporan Harian - Apotek Sehat</title>
+  <style>
+    @page { size: A4 landscape; margin: 15mm; }
+    body { font-family: 'Plus Jakarta Sans', Arial, sans-serif; color: #0f1b2d; padding: 20px; }
+    h1 { font-size: 22px; margin: 0 0 4px; }
+    .subtitle { color: #5a6a85; font-size: 13px; margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th { background: #2563a8; color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+    td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; }
+    tr:nth-child(even) td { background: #f8fafc; }
+    .text-right { text-align: right; }
+    .text-center { text-align: center; }
+    .summary { margin-top: 20px; display: flex; gap: 20px; }
+    .summary-box { background: #f0f5ff; border-radius: 8px; padding: 12px 20px; border: 1px solid #d0e0ff; }
+    .summary-box .label { font-size: 11px; color: #5a6a85; }
+    .summary-box .value { font-size: 18px; font-weight: 800; color: #2563a8; }
+    .footer { margin-top: 25px; font-size: 11px; color: #94a3b8; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 12px; }
+    @media print { body { padding: 0; } }
+  </style>
+</head>
+<body>
+  <h1>Laporan Harian Apotek Sehat</h1>
+  <div class="subtitle">Periode: Seluruh data laporan yang tersedia</div>
+
+  <div class="summary">
+    <div class="summary-box">
+      <div class="label">Total Transaksi</div>
+      <div class="value">{{ total_transaksi_all }}</div>
+    </div>
+    <div class="summary-box">
+      <div class="label">Total Pendapatan</div>
+      <div class="value">Rp {{ total_pendapatan_all|floatformat:0 }}</div>
+    </div>
+    <div class="summary-box">
+      <div class="label">Jumlah Hari Laporan</div>
+      <div class="value">{{ laporan_list|length }}</div>
+    </div>
+  </div>
+
+  <table style="margin-top:16px;">
+    <thead>
+      <tr>
+        <th style="width:50px;">No</th>
+        <th>Tanggal</th>
+        <th class="text-center">Total Transaksi</th>
+        <th class="text-right">Total Pendapatan (Rp)</th>
+        <th>Terakhir Diperbarui</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for l in laporan_list %}
+      <tr>
+        <td class="text-center">{{ forloop.counter }}</td>
+        <td>{{ l.tgl_laporan|date:"d/m/Y" }}</td>
+        <td class="text-center">{{ l.total_transaksi }}</td>
+        <td class="text-right">{{ l.total_pendapatan|floatformat:0 }}</td>
+        <td>{{ l.generated_at|date:"d/m/Y H:i" }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5" class="text-center" style="color:#94a3b8;padding:30px;">Belum ada data laporan.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="footer">Dicetak pada {{ today|date:"d/m/Y H:i" }} — Apotek Sehat</div>
+
+  <script>window.print();</script>
+</body>
+</html>

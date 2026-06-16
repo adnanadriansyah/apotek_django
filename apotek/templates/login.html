@@ -11,16 +11,16 @@
   <style>
     * { font-family: 'Plus Jakarta Sans', sans-serif; }
     .glass {
-      background: rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.7);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(0,0,0,0.08);
     }
     .gradient-accent {
-      background: linear-gradient(135deg, #d4af37 0%, #f5d76e 50%, #d4af37 100%);
+      background: linear-gradient(135deg, #2563a8 0%, #3b82f6 50%, #2563a8 100%);
     }
     .gradient-bg {
-      background: linear-gradient(135deg, #0a0f1a 0%, #0f1724 30%, #1a2a4a 70%, #0a0f1a 100%);
+      background: linear-gradient(135deg, #f0f5ff 0%, #e0ecff 30%, #d0e0ff 70%, #f0f5ff 100%);
     }
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
@@ -37,22 +37,22 @@
 <body class="gradient-bg min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
 
   <!-- Background Orbs -->
-  <div class="absolute top-20 left-10 w-72 h-72 bg-[#d4af37] rounded-full blur-[120px] opacity-20 animate-glow"></div>
-  <div class="absolute bottom-20 right-10 w-96 h-96 bg-[#1e3a5f] rounded-full blur-[140px] opacity-30 animate-glow" style="animation-delay: 2s;"></div>
-  <div class="absolute top-1/3 right-1/4 w-48 h-48 bg-[#d4af37] rounded-full blur-[100px] opacity-10 animate-glow" style="animation-delay: 1s;"></div>
+  <div class="absolute top-20 left-10 w-72 h-72 bg-[#2563a8] rounded-full blur-[120px] opacity-12 animate-glow"></div>
+  <div class="absolute bottom-20 right-10 w-96 h-96 bg-[#2563a8] rounded-full blur-[140px] opacity-15 animate-glow" style="animation-delay: 2s;"></div>
+  <div class="absolute top-1/3 right-1/4 w-48 h-48 bg-[#2563a8] rounded-full blur-[100px] opacity-10 animate-glow" style="animation-delay: 1s;"></div>
 
   <div class="relative z-10 w-full max-w-md">
     <!-- Logo -->
     <div class="text-center mb-8">
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="mb-3 animate-float mx-auto"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-      <h1 class="text-2xl font-bold text-white">Apotek <span class="text-[#d4af37]">Sehat</span></h1>
-      <p class="text-gray-500 text-sm mt-1">Sistem Manajemen Apotek</p>
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="mb-3 animate-float mx-auto"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      <h1 class="text-2xl font-bold text-[#0f1b2d]">Apotek <span class="text-[#2563a8]">Sehat</span></h1>
+      <p class="text-[#5a6a85] text-sm mt-1">Sistem Manajemen Apotek</p>
     </div>
 
     <!-- Login Card -->
     <div class="glass rounded-2xl p-8 md:p-10">
-      <h2 class="text-xl font-bold text-white mb-1">Selamat Datang</h2>
-      <p class="text-gray-500 text-sm mb-8">Masuk untuk mengakses dashboard</p>
+      <h2 class="text-xl font-bold text-[#0f1b2d] mb-1">Selamat Datang</h2>
+      <p class="text-[#5a6a85] text-sm mb-8">Masuk untuk mengakses dashboard</p>
 
       {% if error %}
       <div class="flex items-center gap-2 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm mb-5">
@@ -64,33 +64,33 @@
       <form method="POST" action="/login/" class="space-y-5">
         {% csrf_token %}
         <div>
-          <label class="text-xs text-gray-400 font-medium block mb-2">Username</label>
+          <label class="text-xs text-[#5a6a85] font-medium block mb-2">Username</label>
           <div class="relative">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             <input type="text" name="username" placeholder="Masukkan username" required
-              class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/50 transition-all text-sm"/>
+              class="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-[#2563a8]/20 text-[#0f1b2d] placeholder-gray-400 focus:outline-none focus:border-[#2563a8] focus:ring-1 focus:ring-[#2563a8]/50 transition-all text-sm"/>
           </div>
         </div>
         <div>
-          <label class="text-xs text-gray-400 font-medium block mb-2">Password</label>
+          <label class="text-xs text-[#5a6a85] font-medium block mb-2">Password</label>
           <div class="relative">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
             <input type="password" name="password" placeholder="Masukkan password" required
-              class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/50 transition-all text-sm"/>
+              class="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-[#2563a8]/20 text-[#0f1b2d] placeholder-gray-400 focus:outline-none focus:border-[#2563a8] focus:ring-1 focus:ring-[#2563a8]/50 transition-all text-sm"/>
           </div>
         </div>
-        <button type="submit" class="w-full py-3.5 rounded-xl text-sm font-bold text-[#0a0f1a] gradient-accent hover:opacity-90 transition-all shadow-lg shadow-[#d4af37]/20 flex items-center justify-center gap-2">
+        <button type="submit" class="w-full py-3.5 rounded-xl text-sm font-bold text-white gradient-accent hover:opacity-90 transition-all shadow-lg shadow-[#2563a8]/20 flex items-center justify-center gap-2">
           Masuk
           <span>→</span>
         </button>
       </form>
 
-      <div class="mt-6 pt-6 border-t border-white/5 text-center">
-        <p class="text-xs text-gray-600">Hubungi admin untuk mendaftarkan akun baru</p>
+      <div class="mt-6 pt-6 border-t border-[#2563a8]/10 text-center">
+        <p class="text-xs text-[#94a3b8]">Hubungi admin untuk mendaftarkan akun baru</p>
       </div>
     </div>
 
-    <p class="text-center text-xs text-gray-700 mt-6">© 2024 Apotek Sehat. All rights reserved.</p>
+    <p class="text-center text-xs text-[#94a3b8] mt-6">© 2024 Apotek Sehat. All rights reserved.</p>
   </div>
 
 </body>
